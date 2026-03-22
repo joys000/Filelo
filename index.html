@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Filelo — 파일을 더 스마트하게</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0E1018;--bg-card:#1C2035;--bg-side:#181C2A;--bg-dark:#0a0c14;--bg-tip:#161D33;--accent:#5B9CF6;--accent2:#7B6CF6;--success:#34D9A0;--warning:#F9C74F;--danger:#F47171;--text:#E8EAF2;--text-sub:#7A84A0;--border:#272D45}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:.5}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:64px;background:rgba(14,16,24,.88);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:22px;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links a{color:var(--text-sub);text-decoration:none;font-size:13px;font-weight:500;transition:color .2s}
+.nav-links a:hover{color:var(--text)}
+.nav-cta{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff!important;padding:7px 18px;border-radius:8px;font-weight:600!important}
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:120px 24px 80px;overflow:hidden}
+.hero-glow{position:absolute;width:700px;height:700px;border-radius:50%;background:radial-gradient(ellipse,rgba(91,156,246,.13) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none}
+.hero-glow2{position:absolute;width:400px;height:400px;border-radius:50%;background:radial-gradient(ellipse,rgba(123,108,246,.10) 0%,transparent 70%);top:30%;right:15%;pointer-events:none;animation:floatG 6s ease-in-out infinite}
+@keyframes floatG{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(91,156,246,.1);border:1px solid rgba(91,156,246,.3);border-radius:100px;padding:6px 16px;font-size:13px;color:var(--accent);font-weight:500;margin-bottom:28px;animation:fadeUp .6s ease both}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+.hero h1{font-family:'Syne',sans-serif;font-size:clamp(42px,7vw,88px);font-weight:800;line-height:1.05;letter-spacing:-2px;margin-bottom:24px;animation:fadeUp .6s .1s ease both}
+.hl{background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{font-size:18px;line-height:1.7;color:var(--text-sub);max-width:560px;margin:0 auto 40px;font-weight:300;animation:fadeUp .6s .2s ease both}
+.hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;animation:fadeUp .6s .3s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.hero-cards{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.float-card{position:absolute;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:12px 16px;font-size:13px;display:flex;align-items:center;gap:10px;animation:float 8s ease-in-out infinite;white-space:nowrap}
+.float-card:nth-child(1){top:20%;left:5%;animation-delay:0s}
+.float-card:nth-child(2){top:60%;left:3%;animation-delay:2s}
+.float-card:nth-child(3){top:22%;right:5%;animation-delay:1s}
+.float-card:nth-child(4){top:65%;right:4%;animation-delay:3s}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+.float-icon{font-size:20px}
+.float-label{color:var(--text-sub);font-size:11px}
+.float-value{color:var(--text);font-weight:600;font-size:13px}
+.btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;padding:14px 32px;border-radius:10px;font-size:15px;font-weight:600;text-decoration:none;transition:transform .2s,box-shadow .2s;box-shadow:0 0 30px rgba(91,156,246,.3);display:inline-block}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 0 40px rgba(91,156,246,.5)}
+.btn-outline{background:transparent;color:var(--text);padding:14px 32px;border-radius:10px;font-size:15px;font-weight:500;text-decoration:none;border:1px solid var(--border);transition:border-color .2s,background .2s;display:inline-block}
+.btn-outline:hover{border-color:var(--accent);background:rgba(91,156,246,.06)}
+.btn-download{background:linear-gradient(135deg,var(--success),#20c97a);color:#0E1018;padding:16px 36px;border-radius:10px;font-size:15px;font-weight:700;text-decoration:none;transition:transform .2s,box-shadow .2s;box-shadow:0 0 30px rgba(52,217,160,.3);display:inline-flex;align-items:center;gap:8px}
+.btn-download:hover{transform:translateY(-2px);box-shadow:0 0 50px rgba(52,217,160,.5)}
+section{position:relative;z-index:1}
+.section-label{font-size:12px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+.section-title{font-family:'Syne',sans-serif;font-size:clamp(28px,4vw,48px);font-weight:700;letter-spacing:-1px;line-height:1.15;margin-bottom:16px}
+.section-desc{color:var(--text-sub);font-size:16px;line-height:1.7;font-weight:300;max-width:520px}
+.tech-strip{padding:40px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);overflow:hidden;position:relative;z-index:1}
+.tech-track{display:flex;gap:40px;animation:marquee 22s linear infinite;width:max-content}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.tech-item{display:flex;align-items:center;gap:10px;color:var(--text-sub);font-size:14px;font-weight:500;white-space:nowrap;padding:0 20px}
+.tech-item span{font-size:20px}
+.features{padding:100px 48px;max-width:1200px;margin:0 auto}
+.features-header{display:flex;align-items:flex-end;justify-content:space-between;gap:40px;margin-bottom:64px;flex-wrap:wrap}
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.feature-card{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:28px;transition:border-color .3s,transform .3s,box-shadow .3s;position:relative;overflow:hidden}
+.feature-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;opacity:0;transition:opacity .3s}
+.feature-card:hover{border-color:rgba(91,156,246,.4);transform:translateY(-4px);box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.feature-card:hover::before{opacity:1}
+.fc-1::before{background:linear-gradient(90deg,var(--accent),var(--accent2))}
+.fc-2::before{background:linear-gradient(90deg,var(--success),var(--accent))}
+.fc-3::before{background:linear-gradient(90deg,var(--accent2),var(--danger))}
+.fc-4::before{background:linear-gradient(90deg,var(--warning),var(--success))}
+.fc-5::before{background:linear-gradient(90deg,var(--danger),var(--warning))}
+.fc-6::before{background:linear-gradient(90deg,var(--accent),var(--success))}
+.feature-icon{font-size:32px;margin-bottom:18px;display:block}
+.feature-title{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;margin-bottom:10px;letter-spacing:-.3px}
+.feature-desc{color:var(--text-sub);font-size:14px;line-height:1.65;font-weight:300}
+.feature-tag{display:inline-block;margin-top:16px;font-size:11px;font-weight:600;padding:4px 10px;border-radius:100px;letter-spacing:.5px}
+.tag-ai{background:rgba(91,156,246,.15);color:var(--accent)}
+.tag-local{background:rgba(52,217,160,.15);color:var(--success)}
+.tag-free{background:rgba(249,199,79,.15);color:var(--warning)}
+/* preview */
+.preview{padding:100px 48px;max-width:1200px;margin:0 auto}
+.preview-header{text-align:center;margin-bottom:56px}
+.preview-header .section-desc{margin:12px auto 0}
+.tab-bar{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:32px}
+.tab-btn{background:var(--bg-card);border:1px solid var(--border);color:var(--text-sub);padding:9px 20px;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;font-family:'Noto Sans KR',sans-serif;transition:all .2s}
+.tab-btn:hover{border-color:var(--accent);color:var(--text)}
+.tab-btn.active{background:rgba(91,156,246,.12);border-color:var(--accent);color:var(--accent);font-weight:700}
+.mockup-wrap{border-radius:16px;overflow:hidden;border:1px solid var(--border);box-shadow:0 40px 100px rgba(0,0,0,.5)}
+.win-chrome{background:#0a0c14;padding:12px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border)}
+.win-dots{display:flex;gap:6px}
+.win-dot{width:12px;height:12px;border-radius:50%}
+.win-dot.r{background:#F47171}.win-dot.y{background:#F9C74F}.win-dot.g{background:#34D9A0}
+.win-title{font-size:12px;color:var(--text-sub);margin-left:8px}
+.app-shell{display:flex;background:#13151F;min-height:420px}
+.app-sidebar{width:200px;background:#181C2A;border-right:1px solid var(--border);padding:16px 0;flex-shrink:0}
+.sidebar-item{display:flex;align-items:center;gap:10px;padding:10px 18px;font-size:13px;color:var(--text-sub);cursor:pointer;transition:all .15s}
+.sidebar-item:hover{background:rgba(255,255,255,.04);color:var(--text)}
+.sidebar-item.active{background:rgba(91,156,246,.12);color:var(--accent);border-right:2px solid var(--accent)}
+.sidebar-icon{font-size:16px}
+.app-content{flex:1;padding:24px;overflow:hidden}
+.panel{display:none}.panel.active{display:block}
+.panel-title{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--text);margin-bottom:4px}
+.panel-sub{font-size:12px;color:var(--text-sub);margin-bottom:14px}
+.tip-box-mock{background:#161D33;border-radius:8px;padding:10px 14px;font-size:12px;color:var(--text-sub);margin-bottom:16px;line-height:1.6}
+.tip-box-mock span{color:var(--accent);font-weight:600}
+.mock-row{display:flex;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.mock-select{background:#1C2035;border:1px solid var(--border);border-radius:7px;padding:7px 14px;font-size:12px;color:var(--text);min-width:120px}
+.mock-btn{padding:7px 16px;border-radius:7px;font-size:12px;font-weight:600;border:none;cursor:pointer;font-family:'Noto Sans KR',sans-serif}
+.mock-btn.primary{background:var(--accent);color:#fff}
+.mock-btn.success{background:var(--success);color:#0E1018}
+.mock-btn.danger{background:rgba(244,113,113,.15);color:var(--danger);border:1px solid rgba(244,113,113,.3)}
+.mock-textarea{width:100%;background:#1C2035;border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-size:12px;color:var(--text-sub);line-height:1.6;resize:none;height:80px}
+.mock-log{background:#0E1018;border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-size:12px;color:var(--success);font-family:'Consolas',monospace;height:64px;overflow:hidden}
+.mock-table{width:100%;border-collapse:collapse;font-size:12px}
+.mock-table th{background:#1C2035;color:var(--accent);padding:7px 12px;text-align:left;font-weight:600;border-bottom:1px solid var(--border)}
+.mock-table td{padding:7px 12px;color:var(--text-sub);border-bottom:1px solid rgba(39,45,69,.5)}
+.mock-table tr:nth-child(even) td{background:rgba(28,32,53,.4)}
+.dup-row td{color:var(--danger);text-decoration:line-through;opacity:.6}
+.tracker-form-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px}
+.mock-input{background:#1C2035;border:1px solid var(--border);border-radius:7px;padding:7px 10px;font-size:12px;color:var(--text-sub);width:100%}
+.tracker-table{width:100%;border-collapse:collapse;font-size:12px}
+.tracker-table th{color:var(--accent);font-weight:700;padding:6px 10px;text-align:left;border-bottom:1px solid var(--border)}
+.tracker-table td{padding:7px 10px;color:var(--text-sub)}
+.tracker-table tr:nth-child(even) td{background:rgba(28,32,53,.4)}
+.dday-danger{color:var(--danger);font-weight:700}
+.dday-warn{color:var(--warning);font-weight:700}
+.dday-ok{color:var(--success);font-weight:700}
+.img-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+.img-thumb{background:#1C2035;border:1px solid var(--border);border-radius:8px;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;font-size:32px;position:relative;overflow:hidden}
+.img-thumb-label{position:absolute;bottom:6px;left:0;right:0;text-align:center;font-size:11px;color:var(--text-sub)}
+.img-after{background:repeating-conic-gradient(#1C2035 0% 25%,#131520 0% 50%) 0 0/16px 16px}
+.remove-badge{position:absolute;top:6px;right:6px;background:var(--success);color:#0E1018;font-size:10px;font-weight:700;padding:2px 7px;border-radius:100px}
+/* workflow */
+.workflow{padding:100px 48px;background:var(--bg-side);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.workflow-inner{max-width:1200px;margin:0 auto}
+.workflow-header{text-align:center;margin-bottom:64px}
+.workflow-header .section-desc{margin:0 auto}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative}
+.steps::before{content:'';position:absolute;top:32px;left:12%;right:12%;height:1px;background:linear-gradient(90deg,var(--accent),var(--accent2),var(--success));opacity:.4}
+.step{display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 20px}
+.step-num{width:64px;height:64px;border-radius:50%;background:var(--bg-card);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--accent);margin-bottom:20px;position:relative;z-index:1;transition:border-color .3s,background .3s}
+.step:hover .step-num{border-color:var(--accent);background:rgba(91,156,246,.1)}
+.step-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;margin-bottom:8px}
+.step-desc{color:var(--text-sub);font-size:13px;line-height:1.6;font-weight:300}
+/* AI section */
+.ai-section{padding:100px 48px;background:var(--bg-side);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.ai-inner{max-width:960px;margin:0 auto}
+.ai-header{text-align:center;margin-bottom:48px}
+.ai-header .section-desc{margin:12px auto 0}
+.ai-tabs{display:flex;gap:0;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:4px;margin:0 auto 32px;max-width:500px}
+.ai-tab-btn{flex:1;padding:10px 16px;border-radius:9px;font-size:13px;font-weight:600;border:none;cursor:pointer;background:transparent;color:var(--text-sub);font-family:'Noto Sans KR',sans-serif;transition:all .2s}
+.ai-tab-btn.active{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff}
+.ai-tool-panel{display:none}.ai-tool-panel.active{display:block}
+.ai-card{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;overflow:hidden}
+.ai-card-body{padding:28px}
+.ai-label{font-size:12px;font-weight:600;color:var(--text-sub);margin-bottom:6px;letter-spacing:.5px;text-transform:uppercase}
+.ai-row{display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap;align-items:flex-end}
+.ai-select{background:#13151F;border:1px solid var(--border);border-radius:8px;padding:10px 14px;font-size:13px;color:var(--text);font-family:'Noto Sans KR',sans-serif;outline:none;cursor:pointer;min-width:160px}
+.ai-select:focus{border-color:var(--accent)}
+.ai-textarea{width:100%;background:#13151F;border:1px solid var(--border);border-radius:10px;padding:14px 16px;font-size:13px;color:var(--text);font-family:'Noto Sans KR',sans-serif;line-height:1.7;resize:vertical;min-height:120px;outline:none;transition:border-color .2s}
+.ai-textarea:focus{border-color:var(--accent)}
+.ai-textarea::placeholder{color:var(--text-sub)}
+.ai-text-input{width:100%;background:#13151F;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-size:13px;color:var(--text);font-family:'Noto Sans KR',sans-serif;outline:none;transition:border-color .2s}
+.ai-text-input:focus{border-color:var(--accent)}
+.ai-text-input::placeholder{color:var(--text-sub)}
+.ai-run-btn{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border:none;padding:12px 28px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Noto Sans KR',sans-serif;transition:opacity .2s,transform .2s;display:inline-flex;align-items:center;gap:8px}
+.ai-run-btn:hover{opacity:.9;transform:translateY(-1px)}
+.ai-run-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.ai-result-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.ai-result-label{font-size:11px;font-weight:600;color:var(--text-sub);letter-spacing:2px;text-transform:uppercase}
+.ai-copy-btn{font-size:11px;color:var(--accent);background:rgba(91,156,246,.1);border:none;cursor:pointer;font-family:'Noto Sans KR',sans-serif;padding:4px 10px;border-radius:6px;transition:background .2s}
+.ai-copy-btn:hover{background:rgba(91,156,246,.2)}
+.ai-result-box{background:#0a0c14;border:1px solid var(--border);border-radius:10px;padding:16px;font-size:13px;color:var(--text);font-family:'Noto Sans KR',sans-serif;line-height:1.75;min-height:120px;white-space:pre-wrap;word-break:break-word;max-height:360px;overflow-y:auto}
+.ai-result-placeholder{color:var(--text-sub);font-style:italic}
+.api-key-wrap{margin-bottom:24px;padding:18px 20px;background:#0a0c14;border:1px solid var(--border);border-radius:12px}
+.api-key-row{display:flex;gap:10px;align-items:center;margin-top:8px}
+.api-key-input{flex:1;background:#13151F;border:1px solid var(--border);border-radius:8px;padding:10px 14px;font-size:13px;color:var(--text);font-family:'Noto Sans KR',sans-serif;outline:none}
+.api-key-input:focus{border-color:var(--accent)}
+.api-key-save-btn{background:var(--success);color:#0E1018;border:none;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Noto Sans KR',sans-serif;white-space:nowrap}
+.api-key-status{font-size:12px;margin-top:8px}
+.api-key-status.ok{color:var(--success)}
+.api-key-status.none{color:var(--text-sub)}
+.err-msg{font-size:12px;color:var(--danger)}
+.spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+/* security */
+.security{padding:100px 48px;background:var(--bg-side);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.security-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.sec-diagram{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:28px}
+.sec-flow{display:flex;flex-direction:column;gap:0}
+.sec-node{display:flex;align-items:center;gap:14px;padding:14px 16px;background:#13151F;border:1px solid var(--border);border-radius:10px}
+.sec-node-icon{font-size:22px;flex-shrink:0}
+.sec-node-info{flex:1}
+.sec-node-title{font-size:13px;font-weight:600;color:var(--text);font-family:'Syne',sans-serif;margin-bottom:2px}
+.sec-node-desc{font-size:11px;color:var(--text-sub)}
+.sec-badge{font-size:11px;font-weight:700;padding:3px 9px;border-radius:100px;flex-shrink:0}
+.sec-badge.blue{background:rgba(91,156,246,.15);color:var(--accent)}
+.sec-badge.green{background:rgba(52,217,160,.15);color:var(--success)}
+.sec-badge.purple{background:rgba(123,108,246,.15);color:var(--accent2)}
+.sec-arrow{display:flex;align-items:center;justify-content:center;height:28px;position:relative}
+.sec-arrow::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,var(--accent),var(--accent2));opacity:.4}
+.sec-arrow::after{content:'↓';color:var(--text-sub);font-size:16px;position:relative;z-index:1;background:var(--bg-side);padding:0 4px}
+.sec-stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:0}
+.sec-stat{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:16px}
+.sec-stat-num{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;letter-spacing:-1px;color:var(--accent);line-height:1;margin-bottom:4px}
+.sec-stat-label{font-size:11px;color:var(--text-sub)}
+/* stats */
+.stats-section{padding:80px 48px;max-width:1200px;margin:0 auto}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.stat-card{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:28px;text-align:center}
+.stat-num{font-family:'Syne',sans-serif;font-size:44px;font-weight:800;letter-spacing:-2px;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;margin-bottom:8px}
+.stat-label{color:var(--text-sub);font-size:13px}
+/* install */
+.install-section{padding:100px 48px;max-width:1200px;margin:0 auto}
+.install-header{text-align:center;margin-bottom:56px}
+.install-header .section-desc{margin:12px auto 0}
+.install-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.install-card{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;overflow:hidden}
+.install-card-head{padding:20px 24px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px}
+.install-card-icon{font-size:24px}
+.install-card-title{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:var(--text)}
+.install-card-sub{font-size:12px;color:var(--text-sub);margin-top:2px}
+.install-card-body{padding:20px 24px}
+.os-badges{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.os-badge{display:flex;align-items:center;gap:6px;background:#13151F;border:1px solid var(--border);border-radius:8px;padding:6px 12px;font-size:12px;color:var(--text-sub)}
+.os-badge.supported{border-color:rgba(52,217,160,.4);color:var(--success);background:rgba(52,217,160,.06)}
+.os-icon{font-size:15px}
+.req-list{list-style:none;display:flex;flex-direction:column;gap:10px}
+.req-item{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--text-sub)}
+.req-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0;margin-top:5px}
+.req-item strong{color:var(--text);font-weight:600}
+.code-block{background:#0a0c14;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.code-header{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:1px solid var(--border)}
+.code-lang{font-size:11px;color:var(--text-sub);font-family:'Consolas',monospace;letter-spacing:1px}
+.code-copy-btn{font-size:11px;color:var(--accent);background:none;border:none;cursor:pointer;font-family:'Noto Sans KR',sans-serif;padding:2px 8px;border-radius:4px;transition:background .2s}
+.code-copy-btn:hover{background:rgba(91,156,246,.1)}
+.code-body{padding:14px 16px;font-family:'Consolas',monospace;font-size:12px;line-height:1.8;overflow-x:auto}
+.code-line{display:block}
+.code-comment{color:#4a5568}
+.code-cmd{color:var(--success)}
+.code-pkg{color:var(--accent)}
+.code-str{color:var(--warning)}
+.install-note{margin-top:14px;padding:10px 14px;background:rgba(249,199,79,.07);border:1px solid rgba(249,199,79,.2);border-radius:8px;font-size:12px;color:var(--warning);line-height:1.6}
+/* faq */
+.faq-section{padding:100px 48px;border-top:1px solid var(--border)}
+.faq-inner{max-width:800px;margin:0 auto}
+.faq-header{text-align:center;margin-bottom:56px}
+.faq-header .section-desc{margin:12px auto 0}
+.faq-list{display:flex;flex-direction:column;gap:12px}
+.faq-item{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:border-color .2s}
+.faq-item.open{border-color:rgba(91,156,246,.35)}
+.faq-q{display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;gap:16px;user-select:none}
+.faq-q-text{font-family:'Syne',sans-serif;font-size:15px;font-weight:600;color:var(--text);flex:1}
+.faq-icon{width:28px;height:28px;border-radius:50%;background:var(--bg-side);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .3s,background .2s,border-color .2s;font-size:16px;color:var(--text-sub);line-height:1}
+.faq-item.open .faq-icon{transform:rotate(45deg);background:rgba(91,156,246,.12);border-color:var(--accent);color:var(--accent)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .4s ease,padding .3s ease;padding:0 24px}
+.faq-item.open .faq-a{max-height:400px;padding:0 24px 20px}
+.faq-a-text{font-size:14px;color:var(--text-sub);line-height:1.75;font-weight:300;border-top:1px solid var(--border);padding-top:16px}
+.faq-a-text strong{color:var(--text);font-weight:600}
+.faq-a-text code{background:#0a0c14;border:1px solid var(--border);border-radius:4px;padding:1px 6px;font-family:'Consolas',monospace;font-size:12px;color:var(--accent)}
+/* cta */
+.cta-section{padding:120px 48px;text-align:center;position:relative;overflow:hidden}
+.cta-glow{position:absolute;width:500px;height:500px;border-radius:50%;background:radial-gradient(ellipse,rgba(91,156,246,.15) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none}
+.cta-section h2{font-family:'Syne',sans-serif;font-size:clamp(32px,5vw,60px);font-weight:800;letter-spacing:-2px;margin-bottom:20px;position:relative;z-index:1}
+.cta-section p{color:var(--text-sub);font-size:17px;line-height:1.7;font-weight:300;max-width:480px;margin:0 auto 40px;position:relative;z-index:1}
+.cta-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;position:relative;z-index:1}
+footer{border-top:1px solid var(--border);padding:40px 48px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px}
+.footer-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:18px;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.footer-copy{color:var(--text-sub);font-size:13px}
+.footer-links{display:flex;gap:24px;list-style:none}
+.footer-links a{color:var(--text-sub);text-decoration:none;font-size:13px;transition:color .2s}
+.footer-links a:hover{color:var(--text)}
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+@media(max-width:900px){.features-grid{grid-template-columns:repeat(2,1fr)}.security-inner{grid-template-columns:1fr;gap:48px}.install-grid{grid-template-columns:1fr}.stats-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:768px){nav{padding:0 20px}.nav-links{display:none}.features,.preview,.workflow,.ai-section,.security,.stats-section,.install-section,.faq-section,.cta-section{padding-left:20px;padding-right:20px}.features-grid{grid-template-columns:1fr}.steps{grid-template-columns:repeat(2,1fr);gap:32px}.steps::before{display:none}.float-card{display:none}.ai-tabs{max-width:100%}}
+
+/* ── 카테고리별 기능 소개 ── */
+.all-features{padding:100px 48px;max-width:1280px;margin:0 auto}
+.all-features-header{text-align:center;margin-bottom:64px}
+.all-features-header .section-desc{margin:12px auto 0}
+.cat-block{margin-bottom:52px}
+.cat-label-row{display:flex;align-items:center;gap:14px;margin-bottom:20px}
+.cat-icon{font-size:22px}
+.cat-name{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--text)}
+.cat-count{font-size:11px;font-weight:600;padding:3px 10px;border-radius:100px;background:rgba(91,156,246,.12);color:var(--accent);letter-spacing:.5px}
+.cat-divider{flex:1;height:1px;background:var(--border)}
+.feat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.feat-item{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:20px 18px;transition:border-color .25s,transform .25s,box-shadow .25s;position:relative;overflow:hidden}
+.feat-item::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;opacity:0;transition:opacity .25s}
+.feat-item:hover{border-color:rgba(91,156,246,.4);transform:translateY(-3px);box-shadow:0 16px 48px rgba(0,0,0,.28)}
+.feat-item:hover::after{opacity:1}
+.cat-file .feat-item::after{background:linear-gradient(90deg,var(--accent),var(--accent2))}
+.cat-doc  .feat-item::after{background:linear-gradient(90deg,var(--warning),var(--success))}
+.cat-img  .feat-item::after{background:linear-gradient(90deg,var(--accent2),var(--danger))}
+.cat-ai   .feat-item::after{background:linear-gradient(90deg,var(--accent),var(--success))}
+.cat-data .feat-item::after{background:linear-gradient(90deg,var(--success),var(--accent))}
+.cat-study .feat-item::after{background:linear-gradient(90deg,var(--danger),var(--warning))}
+.feat-emoji{font-size:26px;margin-bottom:12px;display:block}
+.feat-name{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--text);margin-bottom:6px;letter-spacing:-.2px}
+.feat-desc{font-size:12px;color:var(--text-sub);line-height:1.6;font-weight:300}
+/* install simple */
+.install-simple{padding:100px 48px;background:var(--bg-side);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.install-simple-inner{max-width:900px;margin:0 auto}
+.install-simple-header{text-align:center;margin-bottom:56px}
+.install-simple-header .section-desc{margin:12px auto 0}
+.install-steps-row{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:40px}
+.install-step-card{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:28px 24px;text-align:center;transition:border-color .25s,transform .25s}
+.install-step-card:hover{border-color:rgba(91,156,246,.35);transform:translateY(-3px)}
+.install-step-icon{font-size:32px;margin-bottom:14px;display:block}
+.install-step-title{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:8px}
+.install-step-desc{font-size:13px;color:var(--text-sub);line-height:1.65;font-weight:300}
+.install-os-row{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap}
+.install-os-chip{display:flex;align-items:center;gap:8px;background:var(--bg-card);border:1px solid rgba(52,217,160,.35);border-radius:10px;padding:10px 18px;font-size:13px;font-weight:500;color:var(--success)}
+.install-os-chip span{font-size:18px}
+@media(max-width:1100px){.feat-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:768px){.feat-grid{grid-template-columns:repeat(2,1fr)}.install-steps-row{grid-template-columns:1fr}.all-features,.install-simple{padding-left:20px;padding-right:20px}}
+@media(max-width:480px){.feat-grid{grid-template-columns:1fr}}
+
+/* ── 햄버거 메뉴 ── */
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:6px;z-index:200}
+.hamburger span{display:block;width:22px;height:2px;background:var(--text);border-radius:2px;transition:transform .3s,opacity .3s}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mobile-nav{display:none;position:fixed;top:64px;left:0;right:0;background:rgba(14,16,24,.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:16px 0;z-index:99;flex-direction:column}
+.mobile-nav.open{display:flex}
+.mobile-nav a{color:var(--text-sub);text-decoration:none;font-size:15px;font-weight:500;padding:14px 28px;transition:color .2s,background .2s}
+.mobile-nav a:hover{color:var(--text);background:rgba(255,255,255,.04)}
+.mobile-nav .m-cta{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff!important;margin:8px 20px;padding:14px 20px;border-radius:10px;font-weight:700;text-align:center}
+
+/* ── 기능 카드 배지 ── */
+.feat-badges{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.badge{font-size:10px;font-weight:700;padding:3px 8px;border-radius:100px;letter-spacing:.4px;white-space:nowrap}
+.badge-free{background:rgba(52,217,160,.15);color:var(--success)}
+.badge-ai{background:rgba(91,156,246,.15);color:var(--accent)}
+.badge-local{background:rgba(123,108,246,.15);color:var(--accent2)}
+.badge-online{background:rgba(249,199,79,.12);color:var(--warning)}
+
+/* ── 모바일 카테고리 아코디언 ── */
+.cat-accordion-btn{display:none}
+@media(max-width:768px){
+  .hamburger{display:flex}
+  .cat-accordion-btn{display:flex;width:100%;align-items:center;justify-content:space-between;background:none;border:none;cursor:pointer;padding:0;margin-bottom:0}
+  .cat-accordion-btn .cat-chevron{font-size:14px;color:var(--text-sub);transition:transform .3s}
+  .cat-block.collapsed .cat-accordion-btn .cat-chevron{transform:rotate(-90deg)}
+  .cat-block .feat-grid{transition:max-height .35s ease,opacity .3s ease;overflow:hidden}
+  .cat-block.collapsed .feat-grid{max-height:0!important;opacity:0;pointer-events:none}
+  .cat-block:not(.collapsed) .feat-grid{max-height:2000px;opacity:1}
+  .cat-label-row .cat-divider{display:none}
+  .cat-label-row{cursor:pointer}
+  /* 데이터+학습 나란히 → 세로 */
+  .bottom-cats{grid-template-columns:1fr!important}
+}
+
+/* ── 모달 ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(8px);z-index:1000;display:none;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.open{display:flex}
+.modal-box{background:var(--bg-side);border:1px solid var(--border);border-radius:20px;width:100%;max-width:640px;max-height:80vh;display:flex;flex-direction:column;overflow:hidden;animation:modalIn .25s ease}
+@keyframes modalIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.modal-head{display:flex;align-items:center;justify-content:space-between;padding:24px 28px;border-bottom:1px solid var(--border);flex-shrink:0}
+.modal-title{font-family:'Syne',sans-serif;font-size:20px;font-weight:700;color:var(--text)}
+.modal-close{background:var(--bg-card);border:1px solid var(--border);color:var(--text-sub);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:border-color .2s,color .2s}
+.modal-close:hover{border-color:var(--accent);color:var(--text)}
+.modal-body{padding:28px;overflow-y:auto;font-size:14px;color:var(--text-sub);line-height:1.8;font-weight:300}
+.modal-body h3{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--text);margin:20px 0 8px}
+.modal-body h3:first-child{margin-top:0}
+.modal-body p{margin-bottom:12px}
+.modal-body ul{padding-left:18px;margin-bottom:12px}
+.modal-body ul li{margin-bottom:6px}
+.modal-body a{color:var(--accent);text-decoration:none}
+.modal-body a:hover{text-decoration:underline}
+/* 문의 폼 */
+.contact-form{display:flex;flex-direction:column;gap:14px}
+.contact-label{font-size:12px;font-weight:600;color:var(--text-sub);margin-bottom:4px;letter-spacing:.5px;text-transform:uppercase}
+.contact-input,.contact-textarea{width:100%;background:#0a0c14;border:1px solid var(--border);border-radius:8px;padding:11px 14px;font-size:13px;color:var(--text);font-family:'Noto Sans KR',sans-serif;outline:none;transition:border-color .2s}
+.contact-input:focus,.contact-textarea:focus{border-color:var(--accent)}
+.contact-input::placeholder,.contact-textarea::placeholder{color:var(--text-sub)}
+.contact-textarea{resize:vertical;min-height:120px;line-height:1.6}
+.contact-send-btn{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border:none;padding:13px 28px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Noto Sans KR',sans-serif;transition:opacity .2s;align-self:flex-end}
+.contact-send-btn:hover{opacity:.88}
+.contact-success{display:none;text-align:center;padding:20px 0}
+.contact-success-icon{font-size:48px;margin-bottom:12px}
+.contact-success p{color:var(--success);font-size:15px;font-weight:600}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Filelo</div>
+  <ul class="nav-links">
+    <li><a href="#features">기능</a></li>
+    <li><a href="#preview">미리보기</a></li>
+    <li><a href="#ai-tools">AI 도구</a></li>
+    <li><a href="#install">설치</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="filelo.py" download="filelo.py" class="nav-cta">다운로드</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" onclick="toggleMobileNav()" aria-label="메뉴">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mobile-nav" id="mobileNav">
+  <a href="#features" onclick="closeMobileNav()">기능</a>
+  <a href="#preview" onclick="closeMobileNav()">미리보기</a>
+  <a href="#ai-tools" onclick="closeMobileNav()">AI 도구</a>
+  <a href="#install" onclick="closeMobileNav()">설치</a>
+  <a href="#faq" onclick="closeMobileNav()">FAQ</a>
+  <a href="filelo.py" download="filelo.py" class="m-cta" onclick="closeMobileNav()">⬇ 무료 다운로드</a>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-glow"></div><div class="hero-glow2"></div>
+  <div class="hero-cards">
+    <div class="float-card"><span class="float-icon">🌐</span><div><div class="float-value">DeepL 번역</div><div class="float-label">다국어 지원</div></div></div>
+    <div class="float-card"><span class="float-icon">✅</span><div><div class="float-value">D-3 마감</div><div class="float-label">소방학개론 과제</div></div></div>
+    <div class="float-card"><span class="float-icon">🖼️</span><div><div class="float-value">배경 제거 완료</div><div class="float-label">rembg 처리</div></div></div>
+    <div class="float-card"><span class="float-icon">🔒</span><div><div class="float-value">AES-256 암호화</div><div class="float-label">로컬 키 보관</div></div></div>
+  </div>
+  <div style="position:relative;z-index:1">
+    <div class="hero-badge"><span class="dot"></span>AI 기반 파일 툴킷 · 데스크톱 앱</div>
+    <h1>파일을<br><span class="hl">더 스마트하게</span></h1>
+    <p>번역, 이미지 처리, Excel 정리, 과제 관리, AI 요약까지.<br>Filelo 하나로 22가지 파일 작업을 해결하세요.</p>
+    <div class="hero-btns">
+      <a href="filelo.py" download="filelo.py" class="btn-primary">무료 다운로드 →</a>
+      <a href="#ai-tools" class="btn-outline">AI 도구 체험하기</a>
+    </div>
+  </div>
+</div>
+
+<!-- TECH STRIP -->
+<div class="tech-strip">
+  <div class="tech-track">
+    <div class="tech-item"><span>🤖</span>Gemini 2.0 Flash</div><div class="tech-item"><span>🌐</span>DeepL API</div><div class="tech-item"><span>📄</span>python-docx</div><div class="tech-item"><span>🔒</span>AES-256-GCM</div><div class="tech-item"><span>🖼️</span>rembg</div><div class="tech-item"><span>📊</span>openpyxl</div><div class="tech-item"><span>🖥️</span>CustomTkinter</div><div class="tech-item"><span>📑</span>PyMuPDF</div>
+    <div class="tech-item"><span>🤖</span>Gemini 2.0 Flash</div><div class="tech-item"><span>🌐</span>DeepL API</div><div class="tech-item"><span>📄</span>python-docx</div><div class="tech-item"><span>🔒</span>AES-256-GCM</div><div class="tech-item"><span>🖼️</span>rembg</div><div class="tech-item"><span>📊</span>openpyxl</div><div class="tech-item"><span>🖥️</span>CustomTkinter</div><div class="tech-item"><span>📑</span>PyMuPDF</div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section id="features" class="all-features">
+  <div class="all-features-header reveal">
+    <p class="section-label">Features</p>
+    <h2 class="section-title">22가지 자동화 기능</h2>
+    <p class="section-desc">파일 관리부터 AI 도구까지 — 자주 쓰는 모든 작업을 Filelo 하나로 해결하세요.</p>
+  </div>
+
+  <!-- 📁 파일 관리 -->
+  <div class="cat-block cat-file reveal">
+    <div class="cat-label-row"><button class="cat-accordion-btn" onclick="toggleCat(this.closest('.cat-block'))"><span class="cat-icon">📁</span><span class="cat-name">파일 관리</span><span class="cat-count">4개</span><div class="cat-divider"><span class="cat-chevron">▾</span></button></div></div>
+    <div class="feat-grid">
+      <div class="feat-item"><span class="feat-emoji">🚀</span><div class="feat-name">파일명 번역</div><div class="feat-desc">영문 파일명을 DeepL API로 한글로 자동 번역. 파일 직접 추가 또는 폴더 전체 일괄 처리 가능.</div><div class="feat-badges"><span class="badge badge-online">인터넷 필요</span><span class="badge badge-ai">DeepL</span></div></div>
+      <div class="feat-item"><span class="feat-emoji">📁</span><div class="feat-name">폴더 자동 정리</div><div class="feat-desc">확장자 기준으로 이미지·문서·영상·음악·압축파일·코드 폴더로 자동 분류.</div><div class="feat-badges"><span class="badge badge-free">API 키 불필요</span><span class="badge badge-local">로컬</span></div></div>
+      <div class="feat-item"><span class="feat-emoji">🏷️</span><div class="feat-name">파일명 규칙 변경</div><div class="feat-desc">{date}_{num}_{name} 같은 패턴으로 폴더 내 파일명을 일괄 변경. 적용 전 미리보기 지원.</div><div class="feat-badges"><span class="badge badge-free">API 키 불필요</span><span class="badge badge-local">로컬</span></div></div>
+      <div class="feat-item"><span class="feat-emoji">📂</span><div class="feat-name">과제 폴더 생성</div><div class="feat-desc">과목명 입력 시 날짜별·제출본·참고자료·필기 하위 구조를 자동 생성.</div><div class="feat-badges"><span class="badge badge-free">API 키 불필요</span><span class="badge badge-local">로컬</span></div></div>
+    </div>
+  </div>
+
+  <!-- 📄 문서 처리 -->
+  <div class="cat-block cat-doc reveal">
+    <div class="cat-label-row"><button class="cat-accordion-btn" onclick="toggleCat(this.closest('.cat-block'))"><span class="cat-icon">📄</span><span class="cat-name">문서 처리</span><span class="cat-count">5개</span><div class="cat-divider"><span class="cat-chevron">▾</span></button></div></div>
+    <div class="feat-grid">
+      <div class="feat-item"><span class="feat-emoji">📄</span><div class="feat-name">PDF 변환 & 추출</div><div class="feat-desc">PDF에서 텍스트(.txt)나 포함된 이미지를 모드 선택 후 일괄 추출.</div></div>
+      <div class="feat-item"><span class="feat-emoji">🔗</span><div class="feat-name">PDF 합치기 / 쪼개기</div><div class="feat-desc">여러 PDF를 순서대로 병합하거나, 페이지 범위(1-5 또는 1,3,5) 지정으로 분리.</div><div class="feat-badges"><span class="badge badge-free">API 키 불필요</span><span class="badge badge-local">로컬</span></div></div>
+      <div class="feat-item"><span class="feat-emoji">🔒</span><div class="feat-name">PDF 비밀번호 설정</div><div class="feat-desc">PDF에 AES-256 비밀번호를 걸거나 기존 비밀번호를 일괄 해제.</div><div class="feat-badges"><span class="badge badge-free">API 키 불필요</span><span class="badge badge-local">로컬</span></div></div>
+      <div class="feat-item"><span class="feat-emoji">🧹</span><div class="feat-name">메타데이터 삭제</div><div class="feat-desc">PDF·DOCX의 작성자·수정 이력·숨겨진 메모 등 디지털 지문을 완전 제거.</div><div class="feat-badges"><span class="badge badge-free">API 키 불필요</span><span class="badge badge-local">로컬</span></div></div>
+      <div class="feat-item"><span class="feat-emoji">📊</span><div class="feat-name">표 → 엑셀 변환</div><div class="feat-desc">PDF·DOCX 안의 표를 자동 감지해 각 시트로 분리된 엑셀 파일로 변환.</div><div class="feat-badges"><span class="badge badge-free">API 키 불필요</span><span class="badge badge-local">로컬</span></div></div>
+    </div>
+  </div>
+
+  <!-- 🖼️ 이미지 -->
+  <div class="cat-block cat-img reveal">
+    <div class="cat-label-row"><button class="cat-accordion-btn" onclick="toggleCat(this.closest('.cat-block'))"><span class="cat-icon">🖼️</span><span class="cat-name">이미지</span><span class="cat-count">6개</span><div class="cat-divider"><span class="cat-chevron">▾</span></button></div></div>
+    <div class="feat-grid">
+      <div class="feat-item"><span class="feat-emoji">🖼️</span><div class="feat-name">이미지 일괄 처리</div><div class="feat-desc">폴더 전체를 한 번에 리사이즈, 포맷 변환(JPEG·PNG·WEBP), 품질 조정 후 _처리완료 폴더 저장.</div><div class="feat-badges"><span class="badge badge-free">API 키 불필요</span><span class="badge badge-local">로컬</span></div></div>
+      <div class="feat-item"><span class="feat-emoji">📎</span><div class="feat-name">이미지 → PDF</div><div class="feat-desc">선택한 이미지들을 추가 순서대로 한 장씩 묶어 PDF 한 파일로 생성.</div><div class="feat-badges"><span class="badge badge-free">API 키 불필요</span><span class="badge badge-local">로컬</span></div></div>
+      <div class="feat-item"><span class="feat-emoji">🖼️</span><div class="feat-name">이미지 일괄 추출</div><div class="feat-desc">PDF·DOCX 문서에 포함된 모든 이미지를 한 번에 추출해 _이미지들 폴더에 저장.</div><div class="feat-badges"><span class="badge badge-free">API 키 불필요</span><span class="badge badge-local">로컬</span></div></div>
+      <div class="feat-item"><span class="feat-emoji">💧</span><div class="feat-name">워터마크 삽입</div><div class="feat-desc">텍스트 워터마크를 위치(우하단·중앙 등)·투명도 설정 후 이미지에 일괄 삽입.</div><div class="feat-badges"><span class="badge badge-free">API 키 불필요</span><span class="badge badge-local">로컬</span></div></div>
+      <div class="feat-item"><span class="feat-emoji">📸</span><div class="feat-name">이미지 OCR</div><div class="feat-desc">Gemini AI가 사진·스캔 이미지 속 텍스트를 추출. 원문 그대로 또는 한국어 번역 선택.</div><div class="feat-badges"><span class="badge badge-online">인터넷 필요</span><span class="badge badge-ai">Gemini</span></div></div>
+      <div class="feat-item"><span class="feat-emoji">✂️</span><div class="feat-name">배경 제거</div><div class="feat-desc">rembg AI 모델로 인물·사물 배경을 자동 제거, 투명 PNG로 저장. 완전 로컬 처리.</div><div class="feat-badges"><span class="badge badge-free">API 키 불필요</span><span class="badge badge-local">로컬 AI</span></div></div>
+    </div>
+  </div>
+
+  <!-- 🤖 AI 도구 -->
+  <div class="cat-block cat-ai reveal">
+    <div class="cat-label-row"><button class="cat-accordion-btn" onclick="toggleCat(this.closest('.cat-block'))"><span class="cat-icon">🤖</span><span class="cat-name">AI 도구</span><span class="cat-count">3개</span><div class="cat-divider"><span class="cat-chevron">▾</span></button></div></div>
+    <div class="feat-grid">
+      <div class="feat-item"><span class="feat-emoji">🤖</span><div class="feat-name">AI 문서 요약</div><div class="feat-desc">PDF·TXT·DOCX를 Gemini AI가 핵심 요점 / 한 단락 / 시험 Q&A 스타일로 요약 후 TXT 저장.</div><div class="feat-badges"><span class="badge badge-online">인터넷 필요</span><span class="badge badge-ai">Gemini</span></div></div>
+      <div class="feat-item"><span class="feat-emoji">✏️</span><div class="feat-name">AI 문서 초안</div><div class="feat-desc">보고서·자소서·이메일·기획서 등 종류와 주제 입력 시 Gemini가 완성도 있는 초안 자동 생성.</div><div class="feat-badges"><span class="badge badge-online">인터넷 필요</span><span class="badge badge-ai">Gemini</span></div></div>
+      <div class="feat-item"><span class="feat-emoji">📚</span><div class="feat-name">참고문헌 자동 정리</div><div class="feat-desc">논문·책·URL 정보를 자유롭게 입력하면 APA·MLA·시카고·KCI 형식으로 자동 변환.</div><div class="feat-badges"><span class="badge badge-online">인터넷 필요</span><span class="badge badge-ai">Gemini</span></div></div>
+    </div>
+  </div>
+
+  <!-- 📊 데이터 + 📅 학습 관리 -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start" class="reveal bottom-cats">
+    <div class="cat-block cat-data" style="margin-bottom:0">
+      <div class="cat-label-row"><button class="cat-accordion-btn" onclick="toggleCat(this.closest('.cat-block'))"><span class="cat-icon">📊</span><span class="cat-name">데이터</span><span class="cat-count">1개</span><div class="cat-divider"></div><span class="cat-chevron">▾</span></button></div>
+      <div class="feat-grid" style="grid-template-columns:1fr">
+        <div class="feat-item"><span class="feat-emoji">📊</span><div class="feat-name">엑셀 자동화</div><div class="feat-desc">여러 엑셀 파일의 시트 합치기, 완전히 동일한 중복 행 자동 제거, CSV → XLSX 변환.</div><div class="feat-badges"><span class="badge badge-free">API 키 불필요</span><span class="badge badge-local">로컬</span></div></div>
+      </div>
+    </div>
+    <div class="cat-block cat-study" style="margin-bottom:0">
+      <div class="cat-label-row"><button class="cat-accordion-btn" onclick="toggleCat(this.closest('.cat-block'))"><span class="cat-icon">📅</span><span class="cat-name">학습 관리</span><span class="cat-count">1개</span><div class="cat-divider"></div><span class="cat-chevron">▾</span></button></div>
+      <div class="feat-grid" style="grid-template-columns:1fr">
+        <div class="feat-item"><span class="feat-emoji">📅</span><div class="feat-name">과제 마감 트래커</div><div class="feat-desc">과목별 과제·마감일 등록, D-day 자동 계산, D-3 이하 주황·당일 빨강 색상 경고.</div><div class="feat-badges"><span class="badge badge-free">API 키 불필요</span><span class="badge badge-local">로컬</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- APP PREVIEW -->
+<section id="preview" class="preview">
+  <div class="preview-header reveal"><p class="section-label">App Preview</p><h2 class="section-title">실제 앱 미리보기</h2><p class="section-desc">다운로드 전에 Filelo의 실제 화면을 확인해보세요.</p></div>
+  <div class="tab-bar reveal">
+    <button class="tab-btn active" onclick="switchTab('translate',this)">🌐 번역</button>
+    <button class="tab-btn" onclick="switchTab('excel',this)">📊 Excel</button>
+    <button class="tab-btn" onclick="switchTab('tracker',this)">📅 트래커</button>
+    <button class="tab-btn" onclick="switchTab('image',this)">🖼️ 이미지</button>
+  </div>
+  <div class="mockup-wrap reveal">
+    <div class="win-chrome"><div class="win-dots"><div class="win-dot r"></div><div class="win-dot y"></div><div class="win-dot g"></div></div><span class="win-title">Filelo v5.0</span></div>
+    <div class="app-shell">
+      <div class="app-sidebar">
+        <div class="sidebar-item active" id="side-translate" onclick="switchTab('translate',null)"><span class="sidebar-icon">🌐</span>번역</div>
+        <div class="sidebar-item" id="side-excel" onclick="switchTab('excel',null)"><span class="sidebar-icon">📊</span>Excel</div>
+        <div class="sidebar-item" id="side-tracker" onclick="switchTab('tracker',null)"><span class="sidebar-icon">📅</span>트래커</div>
+        <div class="sidebar-item" id="side-image" onclick="switchTab('image',null)"><span class="sidebar-icon">🖼️</span>이미지</div>
+        <div class="sidebar-item"><span class="sidebar-icon">⚙️</span>설정</div>
+      </div>
+      <div class="app-content">
+        <div class="panel active" id="panel-translate">
+          <div class="panel-title">🌐 AI 문서 번역</div><div class="panel-sub">DeepL · Gemini 기반 고품질 번역</div>
+          <div class="tip-box-mock"><span>①</span> 파일 선택 &nbsp;<span>②</span> 언어 설정 &nbsp;<span>③</span> 번역 시작</div>
+          <div class="mock-row"><select class="mock-select"><option>한국어 → 영어</option></select><select class="mock-select"><option>DeepL API</option></select><button class="mock-btn primary">📂 파일 선택</button><button class="mock-btn success">▶ 번역 시작</button></div>
+          <textarea class="mock-textarea" readonly>소방학개론_3장요약.docx → 로드 완료
+번역 언어: KO → EN  /  엔진: DeepL API
+────────────────────────────
+번역 중... 단락 12 / 24</textarea>
+          <div class="mock-log">✅  소방학개론_3장요약_EN.docx 저장 완료 (0.8s)
+✅  총 2,340 단어 번역 완료</div>
+        </div>
+        <div class="panel" id="panel-excel">
+          <div class="panel-title">📊 Excel 자동화</div><div class="panel-sub">중복 제거 · CSV 변환 · 시트 합치기</div>
+          <div class="mock-row" style="margin-bottom:14px"><button class="mock-btn primary">📂 파일 추가</button><button class="mock-btn success">🗑 중복 제거</button><button class="mock-btn" style="background:rgba(91,156,246,.15);color:var(--accent);border:1px solid rgba(91,156,246,.3)">CSV → XLSX</button></div>
+          <table class="mock-table"><thead><tr><th>이름</th><th>학번</th><th>과목</th><th>점수</th></tr></thead><tbody>
+            <tr><td>김민준</td><td>20210001</td><td>소방학개론</td><td>88</td></tr>
+            <tr><td>이서연</td><td>20210042</td><td>소방학개론</td><td>92</td></tr>
+            <tr class="dup-row"><td>김민준</td><td>20210001</td><td>소방학개론</td><td>88</td></tr>
+            <tr><td>박도윤</td><td>20210078</td><td>소방학개론</td><td>75</td></tr>
+          </tbody></table>
+          <div class="mock-log" style="margin-top:12px;color:var(--warning)">⚠️  중복 1행 감지 → 제거 후 저장: data_중복제거.xlsx</div>
+        </div>
+        <div class="panel" id="panel-tracker">
+          <div class="panel-title">📅 과제 마감 트래커</div><div class="panel-sub">D-day 자동 계산 · 색상 구분</div>
+          <div class="tracker-form-row"><input class="mock-input" placeholder="과목명" readonly><input class="mock-input" placeholder="과제명" readonly><input class="mock-input" placeholder="마감일 YYYY-MM-DD" readonly></div>
+          <div class="mock-row" style="margin-bottom:14px"><button class="mock-btn success">➕ 추가</button><button class="mock-btn" style="background:rgba(249,199,79,.12);color:var(--warning);border:1px solid rgba(249,199,79,.3)">✅ 완료</button><button class="mock-btn danger">🗑️ 삭제</button></div>
+          <table class="tracker-table"><thead><tr><th>과목</th><th>과제명</th><th>마감일</th><th>D-day</th><th>상태</th></tr></thead><tbody>
+            <tr><td>소방학개론</td><td>3장 요약</td><td>2025-05-10</td><td class="dday-danger">D-day ❗</td><td>진행중</td></tr>
+            <tr><td>화재조사론</td><td>레포트 제출</td><td>2025-05-13</td><td class="dday-warn">D-3 ⚠️</td><td>진행중</td></tr>
+            <tr><td>소방법규</td><td>퀴즈 준비</td><td>2025-05-20</td><td style="color:var(--text-sub)">D-10</td><td>진행중</td></tr>
+            <tr><td>건축소방</td><td>중간고사</td><td>2025-04-28</td><td class="dday-ok">완료 ✅</td><td>완료</td></tr>
+          </tbody></table>
+        </div>
+        <div class="panel" id="panel-image">
+          <div class="panel-title">🖼️ 이미지 처리</div><div class="panel-sub">배경 제거 · 포맷 변환 · 워터마크</div>
+          <div class="mock-row" style="margin-bottom:14px"><button class="mock-btn primary">📂 이미지 추가</button><button class="mock-btn success">✂️ 배경 제거</button><button class="mock-btn" style="background:rgba(91,156,246,.15);color:var(--accent);border:1px solid rgba(91,156,246,.3)">🔄 포맷 변환</button></div>
+          <div class="img-grid">
+            <div class="img-thumb"><span style="font-size:40px">🧑‍🚒</span><span class="img-thumb-label">원본 (JPG)</span></div>
+            <div class="img-thumb img-after"><span style="font-size:40px;filter:drop-shadow(0 0 8px rgba(52,217,160,.5))">🧑‍🚒</span><span class="remove-badge">배경 제거 ✓</span><span class="img-thumb-label">결과 (PNG)</span></div>
+          </div>
+          <div class="mock-log">✅  profile_nobg.png 저장 완료 (rembg, 1.2s)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WORKFLOW -->
+<section id="workflow" class="workflow">
+  <div class="workflow-inner">
+    <div class="workflow-header reveal"><p class="section-label">How it works</p><h2 class="section-title">4단계로 끝</h2><p class="section-desc">설치부터 사용까지 복잡한 설정 없이 바로 시작하세요.</p></div>
+    <div class="steps">
+      <div class="step reveal"><div class="step-num">01</div><div class="step-title">다운로드 & 실행</div><div class="step-desc">설치 파일을 받아 실행하면 깔끔한 다크 UI가 바로 열립니다.</div></div>
+      <div class="step reveal" style="transition-delay:.15s"><div class="step-num">02</div><div class="step-title">API 키 입력</div><div class="step-desc">DeepL 또는 Gemini API 키를 설정 탭에 입력. AES-256으로 암호화 저장됩니다.</div></div>
+      <div class="step reveal" style="transition-delay:.3s"><div class="step-num">03</div><div class="step-title">파일 선택</div><div class="step-desc">원하는 탭을 선택하고 파일을 불러옵니다.</div></div>
+      <div class="step reveal" style="transition-delay:.45s"><div class="step-num">04</div><div class="step-title">결과 확인</div><div class="step-desc">처리 결과가 원본 파일 위치에 자동 저장되고 토스트 알림으로 완료를 알려줍니다.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- AI TOOLS LIVE -->
+<section id="ai-tools" class="ai-section">
+  <div class="ai-inner">
+    <div class="ai-header reveal">
+      <p class="section-label">AI Tools — Live Demo</p>
+      <h2 class="section-title">지금 바로 체험해보세요</h2>
+      <p class="section-desc">Gemini API 키만 입력하면 웹에서 바로 AI 기능을 사용할 수 있어요.</p>
+    </div>
+    <!-- API Key -->
+    <div class="api-key-wrap reveal">
+      <div class="ai-label">🔑 Gemini API 키</div>
+      <div style="font-size:12px;color:var(--text-sub);margin-bottom:6px">브라우저 세션에만 저장됩니다 — 서버로 전송되지 않습니다.</div>
+      <div class="api-key-row">
+        <input type="password" id="geminiKeyInput" class="api-key-input" placeholder="AIzaSy...">
+        <button class="api-key-save-btn" onclick="saveApiKey()">저장</button>
+      </div>
+      <div id="apiKeyStatus" class="api-key-status none">키가 입력되지 않았습니다.</div>
+    </div>
+    <!-- Tabs -->
+    <div class="ai-tabs reveal">
+      <button class="ai-tab-btn active" onclick="switchAiTab('summary',this)">🤖 문서 요약</button>
+      <button class="ai-tab-btn" onclick="switchAiTab('draft',this)">✏️ 문서 초안</button>
+      <button class="ai-tab-btn" onclick="switchAiTab('citation',this)">📚 참고문헌</button>
+    </div>
+
+    <!-- SUMMARY PANEL -->
+    <div class="ai-tool-panel active reveal" id="ai-panel-summary">
+      <div class="ai-card"><div class="ai-card-body">
+        <div class="ai-row">
+          <div><div class="ai-label">요약 스타일</div>
+          <select id="summaryStyle" class="ai-select">
+            <option value="bullet">핵심 요점 (불릿)</option>
+            <option value="paragraph">한 단락 요약</option>
+            <option value="qa">시험 Q&A 5개</option>
+          </select></div>
+        </div>
+        <div class="ai-label" style="margin-bottom:8px">요약할 텍스트</div>
+        <textarea id="summaryInput" class="ai-textarea" style="min-height:160px" placeholder="요약하고 싶은 텍스트를 붙여넣으세요. (강의 노트, 보고서, 논문 내용 등)"></textarea>
+        <div style="margin-top:14px;display:flex;gap:12px;align-items:center">
+          <button class="ai-run-btn" id="summaryBtn" onclick="runSummary()">
+            <span id="summaryBtnText">🤖 요약 시작</span><span id="summarySpinner" class="spinner" style="display:none"></span>
+          </button>
+          <span id="summaryErr" class="err-msg"></span>
+        </div>
+        <div style="margin-top:20px">
+          <div class="ai-result-header"><span class="ai-result-label">결과</span><button class="ai-copy-btn" onclick="copyResult('summaryResult')">복사</button></div>
+          <div id="summaryResult" class="ai-result-box"><span class="ai-result-placeholder">요약 결과가 여기에 표시됩니다.</span></div>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- DRAFT PANEL -->
+    <div class="ai-tool-panel" id="ai-panel-draft">
+      <div class="ai-card"><div class="ai-card-body">
+        <div class="ai-row">
+          <div><div class="ai-label">문서 종류</div>
+          <select id="draftType" class="ai-select">
+            <option>보고서</option><option>자기소개서</option><option>이메일</option>
+            <option>독후감</option><option>기획서</option><option>레포트</option>
+            <option>발표 스크립트</option><option>회의록</option><option>공지문</option>
+          </select></div>
+          <div><div class="ai-label">언어</div>
+          <select id="draftLang" class="ai-select" style="min-width:110px">
+            <option value="한국어">한국어</option><option value="English">English</option>
+          </select></div>
+        </div>
+        <div class="ai-label" style="margin-bottom:8px">주제 / 키워드</div>
+        <input type="text" id="draftTopic" class="ai-text-input" placeholder="예) 소방시설 설치 기준의 중요성" style="margin-bottom:14px">
+        <div class="ai-label" style="margin-bottom:8px">추가 조건 (선택)</div>
+        <textarea id="draftCondition" class="ai-textarea" style="min-height:80px" placeholder="예) A4 1장, 공식 문체, 3단락으로 구성해줘"></textarea>
+        <div style="margin-top:14px;display:flex;gap:12px;align-items:center">
+          <button class="ai-run-btn" id="draftBtn" onclick="runDraft()">
+            <span id="draftBtnText">✏️ 초안 생성</span><span id="draftSpinner" class="spinner" style="display:none"></span>
+          </button>
+          <span id="draftErr" class="err-msg"></span>
+        </div>
+        <div style="margin-top:20px">
+          <div class="ai-result-header"><span class="ai-result-label">결과</span><button class="ai-copy-btn" onclick="copyResult('draftResult')">복사</button></div>
+          <div id="draftResult" class="ai-result-box"><span class="ai-result-placeholder">초안이 여기에 표시됩니다.</span></div>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- CITATION PANEL -->
+    <div class="ai-tool-panel" id="ai-panel-citation">
+      <div class="ai-card"><div class="ai-card-body">
+        <div class="ai-row">
+          <div><div class="ai-label">인용 형식</div>
+          <select id="citationStyle" class="ai-select">
+            <option>APA 7판</option><option>MLA 9판</option>
+            <option>시카고 스타일</option><option>한국어 논문(KCI)</option>
+          </select></div>
+        </div>
+        <div class="ai-label" style="margin-bottom:8px">참고문헌 정보 (여러 항목은 줄바꿈으로 구분)</div>
+        <textarea id="citationInput" class="ai-textarea" style="min-height:160px" placeholder="예시:
+김민수, 이영희 (2023). 인공지능과 교육의 미래. 한국교육학회지, 45(2), 123-145.
+Smith, J. (2022). Deep Learning. MIT Press.
+https://www.example.com (접속일: 2024.01.15)"></textarea>
+        <div style="margin-top:14px;display:flex;gap:12px;align-items:center">
+          <button class="ai-run-btn" id="citationBtn" onclick="runCitation()">
+            <span id="citationBtnText">📚 정리 시작</span><span id="citationSpinner" class="spinner" style="display:none"></span>
+          </button>
+          <span id="citationErr" class="err-msg"></span>
+        </div>
+        <div style="margin-top:20px">
+          <div class="ai-result-header"><span class="ai-result-label">결과</span><button class="ai-copy-btn" onclick="copyResult('citationResult')">복사</button></div>
+          <div id="citationResult" class="ai-result-box"><span class="ai-result-placeholder">정리된 참고문헌이 여기에 표시됩니다.</span></div>
+        </div>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SECURITY -->
+<section id="security" class="security">
+  <div class="security-inner">
+    <div class="reveal">
+      <div class="sec-diagram">
+        <p style="font-size:11px;color:var(--text-sub);margin-bottom:16px;letter-spacing:2px;text-transform:uppercase">암호화 흐름</p>
+        <div class="sec-flow">
+          <div class="sec-node"><span class="sec-node-icon">🔑</span><div class="sec-node-info"><div class="sec-node-title">API 키 입력</div><div class="sec-node-desc">DeepL / Gemini API 키</div></div><span class="sec-badge blue">평문</span></div>
+          <div class="sec-arrow"></div>
+          <div class="sec-node"><span class="sec-node-icon">🧂</span><div class="sec-node-info"><div class="sec-node-title">Salt 생성</div><div class="sec-node-desc">os.urandom(32) — 32바이트 랜덤</div></div><span class="sec-badge purple">CSPRNG</span></div>
+          <div class="sec-arrow"></div>
+          <div class="sec-node"><span class="sec-node-icon">🔐</span><div class="sec-node-info"><div class="sec-node-title">PBKDF2 키 파생</div><div class="sec-node-desc">SHA-256 · 480,000 반복 · 32바이트 키</div></div><span class="sec-badge blue">KDF</span></div>
+          <div class="sec-arrow"></div>
+          <div class="sec-node"><span class="sec-node-icon">🛡️</span><div class="sec-node-info"><div class="sec-node-title">AES-256-GCM 암호화</div><div class="sec-node-desc">12바이트 랜덤 Nonce · 인증 태그 포함</div></div><span class="sec-badge green">암호문</span></div>
+          <div class="sec-arrow"></div>
+          <div class="sec-node"><span class="sec-node-icon">💾</span><div class="sec-node-info"><div class="sec-node-title">로컬 저장 (chmod 600)</div><div class="sec-node-desc">~/.filelo_secure.json · 이 PC에만 복호화 가능</div></div><span class="sec-badge green">안전</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal" style="transition-delay:.15s">
+      <p class="section-label">Security</p>
+      <h2 class="section-title">API 키를<br>완벽하게 보호</h2>
+      <p class="section-desc" style="margin-bottom:32px">Filelo는 API 키를 서버에 전송하지 않습니다. 모든 암호화는 이 PC에서만 이루어지며, 파일을 다른 컴퓨터로 복사해도 복호화가 불가능합니다.</p>
+      <div class="sec-stats">
+        <div class="sec-stat"><div class="sec-stat-num">256</div><div class="sec-stat-label">비트 AES-GCM 암호화</div></div>
+        <div class="sec-stat"><div class="sec-stat-num">480K</div><div class="sec-stat-label">PBKDF2 반복 횟수</div></div>
+        <div class="sec-stat"><div class="sec-stat-num">0</div><div class="sec-stat-label">서버 전송 없음</div></div>
+        <div class="sec-stat"><div class="sec-stat-num">600</div><div class="sec-stat-label">chmod 파일 권한</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats-section">
+  <div class="reveal" style="text-align:center;margin-bottom:48px"><p class="section-label">By the numbers</p><h2 class="section-title">숫자로 보는 Filelo</h2></div>
+  <div class="stats-grid">
+    <div class="stat-card reveal"><div class="stat-num">22</div><div class="stat-label">자동화 기능 수</div></div>
+    <div class="stat-card reveal" style="transition-delay:.1s"><div class="stat-num">256</div><div class="stat-label">비트 AES 암호화</div></div>
+    <div class="stat-card reveal" style="transition-delay:.2s"><div class="stat-num">480K</div><div class="stat-label">PBKDF2 반복 횟수</div></div>
+    <div class="stat-card reveal" style="transition-delay:.3s"><div class="stat-num">100%</div><div class="stat-label">로컬 데이터 처리</div></div>
+  </div>
+</section>
+
+<!-- INSTALL -->
+<section id="install" class="install-simple">
+  <div class="install-simple-inner">
+    <div class="install-simple-header reveal">
+      <p class="section-label">Installation</p>
+      <h2 class="section-title">실행만 하면 끝</h2>
+      <p class="section-desc">필요한 패키지를 앱이 자동으로 설치해줍니다. 별도 설정이 필요 없어요.</p>
+    </div>
+    <div class="install-steps-row">
+      <div class="install-step-card reveal">
+        <span class="install-step-icon">⬇️</span>
+        <div class="install-step-title">1. 다운로드</div>
+        <div class="install-step-desc">아래 버튼으로 Filelo 파일을 받아 원하는 폴더에 저장하세요.</div>
+      </div>
+      <div class="install-step-card reveal" style="transition-delay:.15s">
+        <span class="install-step-icon">▶️</span>
+        <div class="install-step-title">2. 실행</div>
+        <div class="install-step-desc">파일을 더블클릭하면 필요한 패키지가 자동으로 설치됩니다.</div>
+      </div>
+      <div class="install-step-card reveal" style="transition-delay:.3s">
+        <span class="install-step-icon">🎉</span>
+        <div class="install-step-title">3. 바로 사용</div>
+        <div class="install-step-desc">설치 완료 후 앱이 열립니다. API 키 없이도 대부분 기능을 바로 사용할 수 있어요.</div>
+      </div>
+    </div>
+    <div class="install-os-row reveal">
+      <div class="install-os-chip"><span>🪟</span> Windows 10 / 11</div>
+      <div class="install-os-chip"><span>🍎</span> macOS 12+</div>
+      <div class="install-os-chip"><span>🐧</span> Ubuntu 20.04+</div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="faq-section">
+  <div class="faq-inner">
+    <div class="faq-header reveal"><p class="section-label">FAQ</p><h2 class="section-title">자주 묻는 질문</h2><p class="section-desc">궁금한 점을 먼저 확인해보세요.</p></div>
+    <div class="faq-list">
+      <div class="faq-item reveal" onclick="toggleFaq(this)">
+        <div class="faq-q"><span class="faq-q-text">API 키 없이도 쓸 수 있는 기능이 있나요?</span><span class="faq-icon">+</span></div>
+        <div class="faq-a"><p class="faq-a-text">네, 22개 기능 중 <strong>15개는 API 키 없이 완전 무료로 사용</strong>할 수 있어요.<br><br>
+        <strong>API 키 불필요 (로컬 처리):</strong> 폴더 정리, 파일명 변경, 과제 폴더 생성, PDF 처리 5종, 이미지 일괄처리·변환·추출, 워터마크, 배경 제거, 엑셀 자동화, 과제 트래커<br><br>
+        <strong>API 키 필요 (인터넷 사용):</strong> 파일명 번역(DeepL), 이미지 OCR·문서 요약·문서 초안·참고문헌 정리(Gemini)</p></div>
+      </div>
+      <div class="faq-item reveal" style="transition-delay:.05s" onclick="toggleFaq(this)">
+        <div class="faq-q"><span class="faq-q-text">API 키가 외부로 유출될 가능성이 있나요?</span><span class="faq-icon">+</span></div>
+        <div class="faq-a"><p class="faq-a-text">없습니다. API 키는 <strong>이 PC에서만 암호화되어 로컬에 저장</strong>됩니다. Filelo 서버는 존재하지 않으며, 어떤 데이터도 외부로 전송되지 않습니다.<br><br>암호화 방식: <code>AES-256-GCM</code> + <code>PBKDF2-SHA256 (480,000회)</code> + 머신 고유 ID 기반 키 파생. 파일을 다른 PC로 복사해도 복호화가 불가능합니다.</p></div>
+      </div>
+      <div class="faq-item reveal" style="transition-delay:.08s" onclick="toggleFaq(this)">
+        <div class="faq-q"><span class="faq-q-text">어떤 파일 형식을 지원하나요?</span><span class="faq-icon">+</span></div>
+        <div class="faq-a"><p class="faq-a-text"><strong>번역:</strong> .docx, .pdf, .txt<br><strong>이미지:</strong> .jpg, .jpeg, .png, .webp, .bmp, .tiff<br><strong>Excel:</strong> .xlsx, .xls, .csv<br><strong>AI 요약·초안:</strong> .pdf, .txt, .docx<br><strong>PDF 처리:</strong> .pdf<br><strong>메타데이터 삭제:</strong> .pdf, .docx</p></div>
+      </div>
+      <div class="faq-item reveal" style="transition-delay:.11s" onclick="toggleFaq(this)">
+        <div class="faq-q"><span class="faq-q-text">인터넷 없이도 사용할 수 있나요?</span><span class="faq-icon">+</span></div>
+        <div class="faq-a"><p class="faq-a-text"><strong>오프라인 완전 가능:</strong> 이미지 배경 제거(rembg), Excel 자동화, 과제 트래커, 폴더 정리, 파일명 변경, PDF 처리, 이미지 처리 등 대부분의 기능<br><br><strong>인터넷 필요:</strong> DeepL 번역(파일명 번역), Gemini AI 기능(OCR·요약·초안·참고문헌)<br><br>rembg 배경 제거 모델은 첫 실행 시 한 번만 다운로드하면 이후 완전 오프라인 사용 가능합니다.</p></div>
+      </div>
+      <div class="faq-item reveal" style="transition-delay:.14s" onclick="toggleFaq(this)">
+        <div class="faq-q"><span class="faq-q-text">처리 결과는 어디에 저장되나요?</span><span class="faq-icon">+</span></div>
+        <div class="faq-a"><p class="faq-a-text">처리 결과물은 <strong>원본 파일과 같은 폴더</strong>에 자동 저장됩니다. 원본은 절대 덮어쓰지 않아요.<br><br>
+        <code>보고서.docx</code> → <code>보고서_EN.docx</code><br>
+        <code>data.xlsx</code> → <code>data_중복제거.xlsx</code><br>
+        <code>photo.jpg</code> → <code>_배경제거/photo_nobg.png</code><br>
+        <code>사진들</code> → <code>_처리완료/</code> 폴더</p></div>
+      </div>
+      <div class="faq-item reveal" style="transition-delay:.17s" onclick="toggleFaq(this)">
+        <div class="faq-q"><span class="faq-q-text">무료인가요? 사용 제한이 있나요?</span><span class="faq-icon">+</span></div>
+        <div class="faq-a"><p class="faq-a-text"><strong>Filelo 자체는 완전 무료</strong>입니다. 외부 API 서비스의 무료 한도만 참고하세요.<br><br>
+        • <strong>DeepL Free:</strong> 500,000자/월 무료<br>
+        • <strong>Gemini API:</strong> Google AI Studio 기준 무료 티어 제공<br>
+        • 그 외 15개 기능: <strong>완전 무료 · 무제한</strong></p></div>
+      </div>
+      <div class="faq-item reveal" style="transition-delay:.2s" onclick="toggleFaq(this)">
+        <div class="faq-q"><span class="faq-q-text">여러 파일을 한 번에 처리할 수 있나요?</span><span class="faq-icon">+</span></div>
+        <div class="faq-a"><p class="faq-a-text">네, 대부분의 기능이 <strong>일괄(배치) 처리</strong>를 지원합니다.<br><br>파일 추가 버튼으로 여러 개를 선택하거나, 폴더 선택으로 폴더 전체를 한 번에 처리할 수 있어요. 처리 중에는 진행 상황이 로그창에 실시간으로 표시됩니다.</p></div>
+      </div>
+      <div class="faq-item reveal" style="transition-delay:.23s" onclick="toggleFaq(this)">
+        <div class="faq-q"><span class="faq-q-text">웹 AI 도구에서 입력한 내용은 저장되나요?</span><span class="faq-icon">+</span></div>
+        <div class="faq-a"><p class="faq-a-text">이 웹사이트의 AI 도구는 <strong>브라우저에서 직접 Gemini API를 호출</strong>합니다. 입력한 텍스트와 API 키는 Filelo 서버를 전혀 거치지 않으며, 브라우저를 닫으면 모두 사라집니다.<br><br>API 키는 <code>sessionStorage</code>에만 임시 저장되며 탭을 닫으면 즉시 삭제됩니다.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="download" class="cta-section">
+  <div class="cta-glow"></div>
+  <h2>지금 바로<br>시작해보세요</h2>
+  <p>Filelo는 무료입니다. 설치 후 5분 안에 첫 번째 파일 작업을 완료할 수 있어요.</p>
+  <div class="cta-btns">
+    <a href="filelo.py" download="filelo.py" class="btn-download">⬇ 무료 다운로드</a>
+    <a href="#ai-tools" class="btn-outline">AI 도구 체험하기</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Filelo</div>
+  <p class="footer-copy">© 2025 Filelo. 모든 권리 보유.</p>
+  <ul class="footer-links"><li><a href="#" onclick="openModal('privacy');return false">개인정보처리방침</a></li><li><a href="#" onclick="openModal('terms');return false">이용약관</a></li><li><a href="#" onclick="openModal('contact');return false">문의</a></li></ul>
+</footer>
+
+<!-- ── MODALS ── -->
+<div class="modal-overlay" id="modal-privacy" onclick="if(event.target===this)closeModal('privacy')">
+  <div class="modal-box">
+    <div class="modal-head">
+      <span class="modal-title">개인정보처리방침</span>
+      <button class="modal-close" onclick="closeModal('privacy')">✕</button>
+    </div>
+    <div class="modal-body">
+      <h3>1. 수집하는 개인정보</h3>
+      <p>Filelo 웹사이트는 어떠한 개인정보도 수집하지 않습니다. 이 웹사이트는 정적 페이지로 운영되며, 서버로 전송되는 데이터가 없습니다.</p>
+      <h3>2. API 키 처리</h3>
+      <p>웹사이트의 AI 도구 체험 기능에 입력하는 Gemini API 키는 브라우저의 <code style="background:#0a0c14;padding:2px 6px;border-radius:4px;font-family:Consolas,monospace;font-size:12px;color:var(--accent)">sessionStorage</code>에만 임시 저장되며, 탭을 닫으면 즉시 삭제됩니다. 해당 키는 Filelo 서버를 전혀 거치지 않고 브라우저에서 Google Gemini API로 직접 전송됩니다.</p>
+      <h3>3. 데스크톱 앱의 데이터 처리</h3>
+      <p>Filelo 데스크톱 앱은 모든 데이터를 사용자의 PC에서만 처리합니다. API 키는 AES-256-GCM으로 암호화되어 로컬에 저장되며, 외부 서버로 전송되지 않습니다.</p>
+      <h3>4. 쿠키 및 추적</h3>
+      <p>이 웹사이트는 쿠키, 광고 추적, 분석 도구를 일절 사용하지 않습니다.</p>
+      <h3>5. 문의</h3>
+      <p>개인정보 관련 문의는 하단의 문의 양식을 이용해주세요.</p>
+      <p style="margin-top:20px;font-size:12px;color:var(--text-sub)">최종 수정일: 2025년 5월</p>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-terms" onclick="if(event.target===this)closeModal('terms')">
+  <div class="modal-box">
+    <div class="modal-head">
+      <span class="modal-title">이용약관</span>
+      <button class="modal-close" onclick="closeModal('terms')">✕</button>
+    </div>
+    <div class="modal-body">
+      <h3>1. 서비스 개요</h3>
+      <p>Filelo는 파일 관리, 문서 처리, 이미지 편집, AI 도구 등을 제공하는 무료 데스크톱 애플리케이션입니다.</p>
+      <h3>2. 이용 조건</h3>
+      <ul>
+        <li>Filelo는 개인 및 비상업적 목적으로 자유롭게 사용할 수 있습니다.</li>
+        <li>소프트웨어를 무단으로 재배포하거나 상업적으로 판매하는 행위는 금지됩니다.</li>
+        <li>소프트웨어를 역공학(리버스 엔지니어링)하거나 악의적 목적으로 사용하는 것을 금지합니다.</li>
+      </ul>
+      <h3>3. 면책 조항</h3>
+      <p>Filelo는 "있는 그대로(AS-IS)" 제공됩니다. 소프트웨어 사용으로 인한 데이터 손실, 파일 손상 등의 피해에 대해 개발자는 책임을 지지 않습니다. 중요한 파일은 반드시 사전에 백업하세요.</p>
+      <h3>4. 외부 API 이용</h3>
+      <p>DeepL, Google Gemini 등 외부 API를 사용하는 기능은 각 서비스의 이용약관을 따릅니다. API 키 발급 및 사용에 따른 비용은 사용자 본인이 부담합니다.</p>
+      <h3>5. 약관 변경</h3>
+      <p>약관은 사전 고지 없이 변경될 수 있습니다. 변경 사항은 이 페이지에 업데이트됩니다.</p>
+      <p style="margin-top:20px;font-size:12px;color:var(--text-sub)">최종 수정일: 2025년 5월</p>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-contact" onclick="if(event.target===this)closeModal('contact')">
+  <div class="modal-box">
+    <div class="modal-head">
+      <span class="modal-title">문의하기</span>
+      <button class="modal-close" onclick="closeModal('contact')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="contact-form" id="contactForm">
+        <div>
+          <div class="contact-label">이름</div>
+          <input type="text" class="contact-input" id="contactName" placeholder="홍길동">
+        </div>
+        <div>
+          <div class="contact-label">이메일</div>
+          <input type="email" class="contact-input" id="contactEmail" placeholder="example@email.com">
+        </div>
+        <div>
+          <div class="contact-label">문의 유형</div>
+          <select class="contact-input" id="contactType" style="cursor:pointer">
+            <option>버그 신고</option>
+            <option>기능 제안</option>
+            <option>사용 문의</option>
+            <option>기타</option>
+          </select>
+        </div>
+        <div>
+          <div class="contact-label">내용</div>
+          <textarea class="contact-textarea" id="contactMsg" placeholder="문의 내용을 자세히 작성해주세요."></textarea>
+        </div>
+        <button class="contact-send-btn" onclick="sendContact()">보내기 →</button>
+      </div>
+      <div class="contact-success" id="contactSuccess">
+        <div class="contact-success-icon">✅</div>
+        <p>문의가 접수되었습니다.<br>빠른 시일 내에 답변드리겠습니다.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// 햄버거 메뉴
+function toggleMobileNav() {
+  document.getElementById('hamburger').classList.toggle('open');
+  document.getElementById('mobileNav').classList.toggle('open');
+}
+function closeMobileNav() {
+  document.getElementById('hamburger').classList.remove('open');
+  document.getElementById('mobileNav').classList.remove('open');
+}
+// 외부 클릭 시 닫기
+document.addEventListener('click', e => {
+  const nav = document.getElementById('mobileNav');
+  const btn = document.getElementById('hamburger');
+  if(nav && nav.classList.contains('open') && !nav.contains(e.target) && !btn.contains(e.target)) closeMobileNav();
+});
+
+// 모바일 카테고리 아코디언
+function toggleCat(block) {
+  if(window.innerWidth > 768) return;
+  block.classList.toggle('collapsed');
+}
+// 모바일에서 초기 상태: 첫 번째 카테고리만 열고 나머지 닫기
+function initCatAccordion() {
+  if(window.innerWidth <= 768) {
+    document.querySelectorAll('.cat-block').forEach((b, i) => {
+      if(i > 0) b.classList.add('collapsed');
+    });
+  }
+}
+window.addEventListener('resize', () => {
+  if(window.innerWidth > 768) {
+    document.querySelectorAll('.cat-block').forEach(b => b.classList.remove('collapsed'));
+  }
+});
+document.addEventListener('DOMContentLoaded', initCatAccordion);
+
+// Scroll reveal
+const obs = new IntersectionObserver(
+  es => es.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible') }),
+  { threshold:.08, rootMargin:'0px 0px -40px 0px' }
+);
+document.querySelectorAll('.reveal').forEach(r => obs.observe(r));
+
+// App preview tabs
+function switchTab(tab, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  else document.querySelectorAll('.tab-btn').forEach(b => { if(b.getAttribute('onclick') && b.getAttribute('onclick').includes("'"+tab+"'")) b.classList.add('active') });
+  document.querySelectorAll('.sidebar-item').forEach(s => s.classList.remove('active'));
+  const se = document.getElementById('side-'+tab);
+  if(se) se.classList.add('active');
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  const panel = document.getElementById('panel-'+tab);
+  if(panel) panel.classList.add('active');
+}
+
+// FAQ
+function toggleFaq(item) {
+  const open = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(f => f.classList.remove('open'));
+  if(!open) item.classList.add('open');
+}
+
+// Code copy
+function copyCode(btn) {
+  const lines = Array.from(btn.closest('.code-block').querySelectorAll('.code-line'))
+    .map(l => l.textContent).filter(t => t.trim() && !t.trim().startsWith('#')).join('\n');
+  navigator.clipboard.writeText(lines).then(() => {
+    btn.textContent = '복사됨 ✓'; btn.style.color = 'var(--success)';
+    setTimeout(() => { btn.textContent = '복사'; btn.style.color = ''; }, 2000);
+  });
+}
+
+// AI tabs
+function switchAiTab(tab, btn) {
+  document.querySelectorAll('.ai-tab-btn').forEach(b => b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  document.querySelectorAll('.ai-tool-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('ai-panel-'+tab).classList.add('active');
+}
+
+// API Key
+let GEMINI_KEY = '';
+function saveApiKey() {
+  const v = document.getElementById('geminiKeyInput').value.trim();
+  if(!v) { setKeyStatus('키를 입력해주세요.', false); return; }
+  GEMINI_KEY = v;
+  try { sessionStorage.setItem('fg_k', v); } catch(e) {}
+  setKeyStatus('✅ API 키가 저장되었습니다. (탭 닫으면 삭제)', true);
+}
+function setKeyStatus(msg, ok) {
+  const el = document.getElementById('apiKeyStatus');
+  el.textContent = msg; el.className = 'api-key-status ' + (ok ? 'ok' : 'none');
+}
+(function(){
+  try { const k = sessionStorage.getItem('fg_k'); if(k){ GEMINI_KEY=k; document.getElementById('geminiKeyInput').value=k; setKeyStatus('✅ API 키가 저장되어 있습니다.', true); } } catch(e){}
+})();
+
+// Copy result
+function copyResult(id) {
+  const text = document.getElementById(id).innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.querySelector(`[onclick="copyResult('${id}')"]`);
+    const orig = btn.textContent; btn.textContent = '복사됨 ✓';
+    setTimeout(() => btn.textContent = orig, 2000);
+  });
+}
+
+// Gemini REST API call
+async function callGemini(prompt) {
+  if(!GEMINI_KEY) throw new Error('API 키를 먼저 입력하고 저장해주세요.');
+  const res = await fetch(
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`,
+    { method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ contents:[{ parts:[{ text: prompt }] }] }) }
+  );
+  if(!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.error?.message || `API 오류 (${res.status})`);
+  }
+  const data = await res.json();
+  return data.candidates?.[0]?.content?.parts?.[0]?.text || '결과를 가져오지 못했습니다.';
+}
+
+function setResult(id, text, isPlaceholder) {
+  const el = document.getElementById(id);
+  if(isPlaceholder) { el.innerHTML = `<span class="ai-result-placeholder">${text}</span>`; }
+  else { el.textContent = text; }
+}
+function setLoading(btnId, txtId, spinnerId, on) {
+  const btn = document.getElementById(btnId);
+  document.getElementById(txtId).style.display = on ? 'none' : '';
+  document.getElementById(spinnerId).style.display = on ? 'inline-block' : 'none';
+  btn.disabled = on;
+}
+
+// Summary
+async function runSummary() {
+  const input = document.getElementById('summaryInput').value.trim();
+  const style = document.getElementById('summaryStyle').value;
+  const errEl = document.getElementById('summaryErr');
+  errEl.textContent = '';
+  if(!input) { errEl.textContent = '텍스트를 입력해주세요.'; return; }
+  const prompts = {
+    bullet: '핵심 요점 5~10개를 불릿 포인트(•)로 요약해줘 (한국어):\n\n',
+    paragraph: '3~5문장으로 간결하게 요약해줘 (한국어):\n\n',
+    qa: '시험에 나올 Q&A 5개를 Q: / A: 형식으로 만들어줘 (한국어):\n\n'
+  };
+  setLoading('summaryBtn','summaryBtnText','summarySpinner', true);
+  setResult('summaryResult', '⏳ AI가 요약 중입니다...', false);
+  try {
+    const r = await callGemini(prompts[style] + input.slice(0, 8000));
+    setResult('summaryResult', r, false);
+  } catch(e) {
+    errEl.textContent = e.message;
+    setResult('summaryResult', '오류가 발생했습니다.', true);
+  } finally { setLoading('summaryBtn','summaryBtnText','summarySpinner', false); }
+}
+
+// Draft
+async function runDraft() {
+  const topic = document.getElementById('draftTopic').value.trim();
+  const type = document.getElementById('draftType').value;
+  const lang = document.getElementById('draftLang').value;
+  const cond = document.getElementById('draftCondition').value.trim();
+  const errEl = document.getElementById('draftErr');
+  errEl.textContent = '';
+  if(!topic) { errEl.textContent = '주제를 입력해주세요.'; return; }
+  const prompt = `${type} 초안을 작성해줘.\n주제: ${topic}\n${cond ? '조건: '+cond+'\n' : ''}언어: ${lang}\n제목 포함, 완성도 있게 작성해줘.`;
+  setLoading('draftBtn','draftBtnText','draftSpinner', true);
+  setResult('draftResult', '⏳ AI가 초안을 작성 중입니다...', false);
+  try {
+    const r = await callGemini(prompt);
+    setResult('draftResult', r, false);
+  } catch(e) {
+    errEl.textContent = e.message;
+    setResult('draftResult', '오류가 발생했습니다.', true);
+  } finally { setLoading('draftBtn','draftBtnText','draftSpinner', false); }
+}
+
+// Citation
+async function runCitation() {
+  const input = document.getElementById('citationInput').value.trim();
+  const style = document.getElementById('citationStyle').value;
+  const errEl = document.getElementById('citationErr');
+  errEl.textContent = '';
+  if(!input) { errEl.textContent = '참고문헌 정보를 입력해주세요.'; return; }
+  const prompt = `아래 참고문헌 정보들을 ${style} 형식에 맞게 정확하게 정리해줘.\n각 항목을 번호 없이 올바른 형식으로 변환하고, 결과만 반환해줘.\n\n${input}`;
+  setLoading('citationBtn','citationBtnText','citationSpinner', true);
+  setResult('citationResult', '⏳ AI가 참고문헌을 정리 중입니다...', false);
+  try {
+    const r = await callGemini(prompt);
+    setResult('citationResult', r, false);
+  } catch(e) {
+    errEl.textContent = e.message;
+    setResult('citationResult', '오류가 발생했습니다.', true);
+  } finally { setLoading('citationBtn','citationBtnText','citationSpinner', false); }
+}
+
+// ── 모달
+function openModal(id) {
+  document.getElementById('modal-' + id).classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal(id) {
+  document.getElementById('modal-' + id).classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => {
+  if(e.key === 'Escape') {
+    ['privacy','terms','contact'].forEach(id => closeModal(id));
+  }
+});
+function sendContact() {
+  const name  = document.getElementById('contactName').value.trim();
+  const email = document.getElementById('contactEmail').value.trim();
+  const msg   = document.getElementById('contactMsg').value.trim();
+  if(!name || !email || !msg) {
+    alert('이름, 이메일, 내용을 모두 입력해주세요.');
+    return;
+  }
+  // 실제 전송 로직 자리 (예: mailto or fetch API)
+  document.getElementById('contactForm').style.display = 'none';
+  document.getElementById('contactSuccess').style.display = 'block';
+  setTimeout(() => {
+    document.getElementById('contactForm').style.display = 'flex';
+    document.getElementById('contactSuccess').style.display = 'none';
+    document.getElementById('contactName').value = '';
+    document.getElementById('contactEmail').value = '';
+    document.getElementById('contactMsg').value = '';
+    closeModal('contact');
+  }, 2800);
+}
+
+</script>
+</body>
+</html>
