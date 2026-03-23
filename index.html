@@ -31,10 +31,14 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
 .hero-cards{position:absolute;inset:0;pointer-events:none;overflow:hidden}
 .float-card{position:absolute;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:12px 16px;font-size:13px;display:flex;align-items:center;gap:10px;animation:float 8s ease-in-out infinite;white-space:nowrap}
-.float-card:nth-child(1){top:20%;left:5%;animation-delay:0s}
-.float-card:nth-child(2){top:60%;left:3%;animation-delay:2s}
-.float-card:nth-child(3){top:22%;right:5%;animation-delay:1s}
-.float-card:nth-child(4){top:65%;right:4%;animation-delay:3s}
+.fc-l1{top:14%;left:2%;animation-delay:0s}
+.fc-l2{top:36%;left:1%;animation-delay:1.5s}
+.fc-l3{top:58%;left:2%;animation-delay:3s}
+.fc-l4{top:78%;left:1%;animation-delay:4.5s}
+.fc-r1{top:14%;right:2%;animation-delay:0.8s}
+.fc-r2{top:36%;right:1%;animation-delay:2.3s}
+.fc-r3{top:58%;right:2%;animation-delay:3.8s}
+.fc-r4{top:78%;right:1%;animation-delay:5.3s}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
 .float-icon{font-size:20px}
 .float-label{color:var(--text-sub);font-size:11px}
@@ -379,6 +383,108 @@ footer{border-top:1px solid var(--border);padding:40px 48px;display:flex;align-i
 .contact-success{display:none;text-align:center;padding:20px 0}
 .contact-success-icon{font-size:48px;margin-bottom:12px}
 .contact-success p{color:var(--success);font-size:15px;font-weight:600}
+
+/* ══════════════════════════════════════════
+   모바일 완전 대응 — 480px 이하
+══════════════════════════════════════════ */
+@media(max-width:480px){
+  /* 네비 */
+  nav{height:56px;padding:0 16px}
+  .nav-logo{font-size:18px}
+  .mobile-nav{top:56px}
+
+  /* 히어로 */
+  .hero{padding:88px 16px 60px;min-height:auto}
+  .hero h1{font-size:clamp(36px,11vw,56px);letter-spacing:-1.5px}
+  .hero p{font-size:15px;margin-bottom:28px;padding:0 4px}
+  .hero-badge{font-size:11px;padding:5px 12px}
+  .hero-btns{flex-direction:column;align-items:stretch;gap:10px;width:100%;max-width:320px;margin:0 auto}
+  .btn-primary,.btn-download{text-align:center;justify-content:center;padding:14px 20px;font-size:14px;border-radius:12px}
+  .btn-outline{text-align:center;padding:13px 20px;font-size:14px}
+
+  /* 섹션 공통 */
+  .features,.preview,.workflow,.ai-section,.security,.stats-section,.install-section,.faq-section,.cta-section,.all-features,.install-simple{padding-left:16px;padding-right:16px;padding-top:60px;padding-bottom:60px}
+  .section-title{font-size:clamp(24px,7vw,36px);letter-spacing:-.8px}
+  .section-desc{font-size:14px}
+
+  /* 기능 카드 */
+  .features-grid{grid-template-columns:1fr;gap:14px}
+  .feature-card{padding:22px 18px}
+
+  /* 통계 */
+  .stats-grid{grid-template-columns:repeat(2,1fr);gap:12px}
+  .stat-num{font-size:clamp(28px,8vw,40px)}
+
+  /* CTA 섹션 버튼 */
+  .cta-btns{flex-direction:column;align-items:stretch;gap:10px}
+  .cta-btns a{text-align:center;justify-content:center}
+
+  /* AI 탭 */
+  .ai-tabs{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:4px;scrollbar-width:none}
+  .ai-tabs::-webkit-scrollbar{display:none}
+  .ai-tab{white-space:nowrap;padding:8px 14px;font-size:12px}
+
+  /* 기능 그리드 */
+  .feat-grid{grid-template-columns:1fr;gap:10px}
+  .feat-item{padding:16px 14px}
+  .feat-emoji{font-size:22px;margin-bottom:8px}
+
+  /* 설치 단계 */
+  .install-steps-row{grid-template-columns:1fr;gap:12px}
+  .install-step-card{padding:20px 18px}
+
+  /* FAQ */
+  .faq-q-text{font-size:14px}
+  .faq-a-text{font-size:13px}
+
+  /* 워크플로 */
+  .steps{grid-template-columns:1fr;gap:20px}
+  .step-num{width:36px;height:36px;font-size:15px}
+
+  /* 푸터 */
+  footer{padding:28px 16px}
+  .footer-links{flex-wrap:wrap;gap:12px;justify-content:center}
+
+  /* 모달 — 하단 슬라이드 */
+  .modal-overlay{align-items:flex-end;padding:0}
+  .modal-box{max-width:100%;width:100%;border-radius:20px 20px 0 0;max-height:85vh;animation:modalMobile .3s ease}
+  @keyframes modalMobile{from{transform:translateY(100%)}to{transform:translateY(0)}}
+  .modal-body{padding:20px}
+  .modal-head{padding:18px 20px}
+
+  /* 프리뷰 mock */
+  .mock-window{padding:12px}
+  .mock-tabs{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .mock-tabs::-webkit-scrollbar{display:none}
+  .mock-tab{white-space:nowrap;font-size:11px;padding:6px 10px}
+
+  /* tech strip 텍스트 크기 */
+  .tech-item{font-size:13px}
+
+  /* 보안 섹션 */
+  .security-list{padding-left:4px}
+  .security-item{font-size:13px;padding:12px 0}
+}
+
+/* ── 360px 이하 극소형 화면 ── */
+@media(max-width:360px){
+  .hero h1{font-size:32px}
+  .stats-grid{grid-template-columns:1fr}
+  .feat-grid{grid-template-columns:1fr}
+}
+
+/* ── 태블릿 768~900px ── */
+@media(min-width:481px) and (max-width:768px){
+  .hero{padding:100px 24px 70px}
+  .hero h1{font-size:clamp(40px,9vw,64px)}
+  .hero-btns{gap:12px}
+  .btn-primary,.btn-download{padding:14px 26px}
+  .features-grid{grid-template-columns:1fr;gap:16px}
+  .feat-grid{grid-template-columns:repeat(2,1fr)}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .steps{grid-template-columns:repeat(2,1fr)}
+}
+
 </style>
 </head>
 <body>
@@ -410,10 +516,16 @@ footer{border-top:1px solid var(--border);padding:40px 48px;display:flex;align-i
 <div class="hero">
   <div class="hero-glow"></div><div class="hero-glow2"></div>
   <div class="hero-cards">
-    <div class="float-card"><span class="float-icon">🌐</span><div><div class="float-value">DeepL 번역</div><div class="float-label">다국어 지원</div></div></div>
-    <div class="float-card"><span class="float-icon">✅</span><div><div class="float-value">D-3 마감</div><div class="float-label">소방학개론 과제</div></div></div>
-    <div class="float-card"><span class="float-icon">🖼️</span><div><div class="float-value">배경 제거 완료</div><div class="float-label">rembg 처리</div></div></div>
-    <div class="float-card"><span class="float-icon">🔒</span><div><div class="float-value">AES-256 암호화</div><div class="float-label">로컬 키 보관</div></div></div>
+    <!-- 왼쪽 4개 -->
+    <div class="float-card fc-l1"><span class="float-icon">🌐</span><div><div class="float-value">DeepL 번역</div><div class="float-label">파일명 자동 번역</div></div></div>
+    <div class="float-card fc-l2"><span class="float-icon">✅</span><div><div class="float-value">D-3 마감</div><div class="float-label">과제 트래커</div></div></div>
+    <div class="float-card fc-l3"><span class="float-icon">📄</span><div><div class="float-value">PDF 병합</div><div class="float-label">여러 파일 → 1개</div></div></div>
+    <div class="float-card fc-l4"><span class="float-icon">📊</span><div><div class="float-value">표 → 엑셀</div><div class="float-label">자동 변환</div></div></div>
+    <!-- 오른쪽 4개 -->
+    <div class="float-card fc-r1"><span class="float-icon">🖼️</span><div><div class="float-value">배경 제거 완료</div><div class="float-label">AI 로컬 처리</div></div></div>
+    <div class="float-card fc-r2"><span class="float-icon">🔒</span><div><div class="float-value">AES-256 암호화</div><div class="float-label">로컬 키 보관</div></div></div>
+    <div class="float-card fc-r3"><span class="float-icon">🤖</span><div><div class="float-value">AI 문서 요약</div><div class="float-label">Gemini 2.0</div></div></div>
+    <div class="float-card fc-r4"><span class="float-icon">🖋️</span><div><div class="float-value">워터마크 삽입</div><div class="float-label">이미지 일괄</div></div></div>
   </div>
   <div style="position:relative;z-index:1">
     <div class="hero-badge"><span class="dot"></span>AI 기반 파일 툴킷 · 데스크톱 앱</div>
@@ -754,12 +866,12 @@ https://www.example.com (접속일: 2024.01.15)"></textarea>
       <div class="install-step-card reveal">
         <span class="install-step-icon">⬇️</span>
         <div class="install-step-title">1. 다운로드</div>
-        <div class="install-step-desc">아래 버튼으로 <strong>Filelo.exe</strong> 파일을 받아 원하는 폴더에 저장하세요.</div>
+        <div class="install-step-desc">아래 버튼으로 Filelo 파일을 받아 원하는 폴더에 저장하세요.</div>
       </div>
       <div class="install-step-card reveal" style="transition-delay:.15s">
         <span class="install-step-icon">▶️</span>
         <div class="install-step-title">2. 실행</div>
-        <div class="install-step-desc"><strong>Filelo.exe</strong>를 더블클릭하면 바로 실행됩니다. Python 설치가 필요 없어요.</div>
+        <div class="install-step-desc">파일을 더블클릭하면 필요한 패키지가 자동으로 설치됩니다.</div>
       </div>
       <div class="install-step-card reveal" style="transition-delay:.3s">
         <span class="install-step-icon">🎉</span>
@@ -769,8 +881,8 @@ https://www.example.com (접속일: 2024.01.15)"></textarea>
     </div>
     <div class="install-os-row reveal">
       <div class="install-os-chip"><span>🪟</span> Windows 10 / 11</div>
-      <div class="install-os-chip"><span>📦</span> Python 불필요</div>
-      <div class="install-os-chip"><span>⚡</span> 더블클릭 바로 실행</div>
+      <div class="install-os-chip"><span>🍎</span> macOS 12+</div>
+      <div class="install-os-chip"><span>🐧</span> Ubuntu 20.04+</div>
     </div>
   </div>
 </section>
@@ -893,19 +1005,19 @@ https://www.example.com (접속일: 2024.01.15)"></textarea>
 
 <div class="modal-overlay" id="modal-contact" onclick="if(event.target===this)closeModal('contact')">
   <div class="modal-box">
-    <div class="modal-header">
+    <div class="modal-head">
       <span class="modal-title">문의하기</span>
       <button class="modal-close" onclick="closeModal('contact')">✕</button>
     </div>
-    <div class="modal-body" style="text-align:center;padding:32px 24px;">
-      <div style="font-size:48px;margin-bottom:16px;">💬</div>
-      <h3 style="font-family:'Syne',sans-serif;font-size:20px;font-weight:700;margin-bottom:12px;color:var(--text);">공식 Discord 서버로 문의해주세요</h3>
-      <p style="color:var(--text-sub);font-size:14px;line-height:1.7;margin-bottom:28px;">버그 신고, 기능 제안, 사용법 문의 등<br>모든 문의는 Discord에서 개발자가 직접 답변합니다.</p>
-      <a href="https://discord.gg/7agPwy9KRb" target="_blank" style="display:inline-flex;align-items:center;gap:10px;background:#5865F2;color:#fff;padding:14px 28px;border-radius:10px;font-size:15px;font-weight:700;text-decoration:none;transition:background .2s;" onmouseover="this.style.background='#4752C4'" onmouseout="this.style.background='#5865F2'">
+    <div class="modal-body" style="text-align:center;padding:32px 24px">
+      <div style="font-size:48px;margin-bottom:16px">💬</div>
+      <h3 style="font-size:18px;font-weight:700;color:var(--text);margin-bottom:12px">공식 Discord 서버로 문의해주세요</h3>
+      <p style="color:var(--text-sub);font-size:14px;line-height:1.7;margin-bottom:28px">버그 신고, 기능 제안, 사용법 문의 등<br>모든 문의는 Discord에서 개발자가 직접 답변합니다.</p>
+      <a href="https://discord.gg/7agPwy9KRb" target="_blank" style="display:inline-flex;align-items:center;gap:10px;background:#5865F2;color:#fff;padding:14px 28px;border-radius:10px;font-size:15px;font-weight:700;text-decoration:none;width:100%;max-width:280px;justify-content:center;box-sizing:border-box" onmouseover="this.style.background='#4752C4'" onmouseout="this.style.background='#5865F2'">
         <svg width="20" height="20" viewBox="0 0 71 55" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M60.1 4.9A58.6 58.6 0 0 0 45.7.7a.2.2 0 0 0-.2.1c-.6 1.1-1.3 2.6-1.8 3.7a54.1 54.1 0 0 0-16.3 0 38 38 0 0 0-1.8-3.7.2.2 0 0 0-.2-.1A58.4 58.4 0 0 0 11 4.9a.2.2 0 0 0-.1.1C1.6 18.7-1 32.2.3 45.5v.1a59 59 0 0 0 18 9.1.2.2 0 0 0 .2-.1 42.1 42.1 0 0 0 3.6-5.9.2.2 0 0 0-.1-.3 38.7 38.7 0 0 1-5.5-2.6.2.2 0 0 1 0-.4l1.1-.8a.2.2 0 0 1 .2 0c11.5 5.3 24 5.3 35.4 0a.2.2 0 0 1 .2 0l1.1.8a.2.2 0 0 1 0 .4 36.2 36.2 0 0 1-5.5 2.6.2.2 0 0 0-.1.3 47.3 47.3 0 0 0 3.6 5.9.2.2 0 0 0 .2.1 58.8 58.8 0 0 0 18.1-9.1v-.1c1.5-15.6-2.5-29-10.6-41a.2.2 0 0 0-.1-.1ZM23.7 37.3c-3.5 0-6.4-3.2-6.4-7.2s2.8-7.2 6.4-7.2c3.6 0 6.5 3.3 6.4 7.2 0 4-2.8 7.2-6.4 7.2Zm23.7 0c-3.5 0-6.4-3.2-6.4-7.2s2.8-7.2 6.4-7.2c3.6 0 6.5 3.3 6.4 7.2 0 4-2.8 7.2-6.4 7.2Z"/></svg>
         Discord 서버 참여하기
       </a>
-      <p style="margin-top:20px;font-size:12px;color:var(--text-sub);">서버 주소: https://discord.gg/7agPwy9KRb</p>
+      <p style="margin-top:16px;font-size:12px;color:var(--text-sub)">https://discord.gg/7agPwy9KRb</p>
     </div>
   </div>
 </div>
@@ -1124,10 +1236,7 @@ document.addEventListener('keydown', e => {
     ['privacy','terms','contact'].forEach(id => closeModal(id));
   }
 });
-function sendContact() {
-  window.open('https://discord.gg/7agPwy9KRb', '_blank');
-  closeModal('contact');
-}
+function sendContact(){window.open('https://discord.gg/7agPwy9KRb','_blank');closeModal('contact');}
 
 </script>
 </body>
