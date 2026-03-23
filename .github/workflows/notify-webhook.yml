@@ -1,8 +1,11 @@
 name: Release_Notification
 on:
   release:
-    # 정식 발행, 수정, 프리릴리즈 시 모두 작동
     types: [published, edited, prereleased]
+
+env:
+  # Node.js 24 환경에서도 작동하는지 계속 스트레스 테스트를 유지합니다.
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   notify:
@@ -11,7 +14,8 @@ jobs:
       - name: Discord 알림 전송
         uses: sarisia/actions-status-discord@v1
         with:
-          webhook_url: ${{ secrets.RELEASE_NOTIFICATION }}
+          # 'webhook_url'을 'webhook'으로 수정했습니다. 
+          webhook: ${{ secrets.RELEASE_NOTIFICATION }}
           status: success
           title: "🎉 Filelo 새로운 버전 출시!"
           description: |
