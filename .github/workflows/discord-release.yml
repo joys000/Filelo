@@ -10,8 +10,8 @@ on:
                               with:
                                         webhook_url: ${{ secrets.Release_Notification }}
                                                   status: success
-                                                            title: 🎉 Filelo 새로운 버전 출시!
+                                                            title: "🎉 Filelo 새로운 버전 출시!"
                                                                       description: |
                                                                                   📦 버전: ${{ github.event.release.tag_name }}
-                                                                                              📝 업데이트: ${{ github.event.release.body }}
+                                                                                              📝 업데이트 내용: ${{ github.event.release.body }}
                                                                                                           🔗 상세정보: ${{ github.event.release.html_url }}
