@@ -1,12 +1,8 @@
 name: Release_Notification
 on:
   release:
-    # 정식 배포(published)뿐만 아니라 편집(edited) 시에도 알림이 가도록 범위를 넓혔습니다.
-    types: [published, edited]
-
-env:
-  # 2026년 6월 지원 중단에 대비한 Node 24 강제 스트레스 테스트 모드 유지
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+    # prereleased(프리릴리즈)를 추가하여 테스트 시에도 알림이 오도록 합니다.
+    types: [published, edited, prereleased]
 
 jobs:
   notify:
@@ -15,7 +11,6 @@ jobs:
       - name: Discord 알림 전송
         uses: sarisia/actions-status-discord@v1
         with:
-          # 시크릿 이름을 대문자로 정확히 일치시켰습니다.
           webhook_url: ${{ secrets.RELEASE_NOTIFICATION }}
           status: success
           title: "🎉 Filelo 새로운 버전 출시!"
@@ -24,4 +19,4 @@ jobs:
             📝 **업데이트 내용:** ${{ github.event.release.body }}
             
             🔗 **상세정보:** [GitHub Release 바로가기](${{ github.event.release.html_url }})
-          color: 0x00ff00 # 성공을 상징하는 초록색 강조
+          color: 0x00ff00
