@@ -1,4 +1,20 @@
 name: Release_Notification
+
+on:
+  release:
+      types: [published]
+      
+      jobs:
+        notify:
+            runs-on: ubuntu-latest
+                steps:
+                      - name: Send Discord Notification
+                              run: |
+                                        curl -X POST ${{ secrets.Release_Notification }} \
+                                                    -H "Content-Type: application/json" \
+                                                                -d '{
+                                                                              "content": "🎉 **Filelo 새로운 버전 출시!**\n\n📦 **버전**: ${{ github.event.release.tag_name }}\n\n📝 **업데이트**:\n${{ github.event.release.body }}\n\n🔗 **링크**: ${{ github.event.release.html_url }}"
+                                                                                          }'name: Release_Notification
 on:
   release:
     types: [published]
