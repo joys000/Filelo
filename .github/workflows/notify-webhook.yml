@@ -1,11 +1,10 @@
 name: Release_Notification
 on:
   release:
-    # prereleased를 추가해야 테스트용 프리릴리즈에서도 작동합니다.
+    # 프리릴리즈를 추가하여 테스트 시에도 무조건 반응하도록 강제합니다.
     types: [published, edited, prereleased]
 
 env:
-  # Node.js 24 강제 전환 대비 (경고 제거)
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
@@ -15,7 +14,7 @@ jobs:
       - name: Discord 알림 전송
         uses: sarisia/actions-status-discord@v1
         with:
-          # webhook_url을 webhook으로 수정 완료
+          # webhook_url이 아닙니다. 정확히 webhook으로 수정했습니다.
           webhook: ${{ secrets.RELEASE_NOTIFICATION }}
           status: success
           title: "🎉 Filelo 새로운 버전 출시!"
