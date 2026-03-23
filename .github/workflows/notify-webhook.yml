@@ -1,7 +1,7 @@
 name: Release_Notification
 on:
   release:
-    # prereleased(프리릴리즈)를 추가하여 테스트 시에도 알림이 오도록 합니다.
+    # 정식 발행, 수정, 프리릴리즈 시 모두 작동
     types: [published, edited, prereleased]
 
 jobs:
