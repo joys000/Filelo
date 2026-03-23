@@ -391,7 +391,7 @@ footer{border-top:1px solid var(--border);padding:40px 48px;display:flex;align-i
     <li><a href="#ai-tools">AI 도구</a></li>
     <li><a href="#install">설치</a></li>
     <li><a href="#faq">FAQ</a></li>
-    <li><a href="filelo.py" download="filelo.py" class="nav-cta">다운로드</a></li>
+    <li><a href="https://github.com/joys000/Filelo/releases/latest/download/Filelo.exe" download="Filelo.exe" class="nav-cta">다운로드</a></li>
   </ul>
   <button class="hamburger" id="hamburger" onclick="toggleMobileNav()" aria-label="메뉴">
     <span></span><span></span><span></span>
@@ -403,7 +403,7 @@ footer{border-top:1px solid var(--border);padding:40px 48px;display:flex;align-i
   <a href="#ai-tools" onclick="closeMobileNav()">AI 도구</a>
   <a href="#install" onclick="closeMobileNav()">설치</a>
   <a href="#faq" onclick="closeMobileNav()">FAQ</a>
-  <a href="filelo.py" download="filelo.py" class="m-cta" onclick="closeMobileNav()">⬇ 무료 다운로드</a>
+  <a href="https://github.com/joys000/Filelo/releases/latest/download/Filelo.exe" download="Filelo.exe" class="m-cta" onclick="closeMobileNav()">⬇ 무료 다운로드</a>
 </div>
 
 <!-- HERO -->
@@ -420,7 +420,7 @@ footer{border-top:1px solid var(--border);padding:40px 48px;display:flex;align-i
     <h1>파일을<br><span class="hl">더 스마트하게</span></h1>
     <p>번역, 이미지 처리, Excel 정리, 과제 관리, AI 요약까지.<br>Filelo 하나로 22가지 파일 작업을 해결하세요.</p>
     <div class="hero-btns">
-      <a href="filelo.py" download="filelo.py" class="btn-primary">무료 다운로드 →</a>
+      <a href="https://github.com/joys000/Filelo/releases/latest/download/Filelo.exe" download="Filelo.exe" class="btn-primary">무료 다운로드 →</a>
       <a href="#ai-tools" class="btn-outline">AI 도구 체험하기</a>
     </div>
   </div>
@@ -754,12 +754,12 @@ https://www.example.com (접속일: 2024.01.15)"></textarea>
       <div class="install-step-card reveal">
         <span class="install-step-icon">⬇️</span>
         <div class="install-step-title">1. 다운로드</div>
-        <div class="install-step-desc">아래 버튼으로 Filelo 파일을 받아 원하는 폴더에 저장하세요.</div>
+        <div class="install-step-desc">아래 버튼으로 <strong>Filelo.exe</strong> 파일을 받아 원하는 폴더에 저장하세요.</div>
       </div>
       <div class="install-step-card reveal" style="transition-delay:.15s">
         <span class="install-step-icon">▶️</span>
         <div class="install-step-title">2. 실행</div>
-        <div class="install-step-desc">파일을 더블클릭하면 필요한 패키지가 자동으로 설치됩니다.</div>
+        <div class="install-step-desc"><strong>Filelo.exe</strong>를 더블클릭하면 바로 실행됩니다. Python 설치가 필요 없어요.</div>
       </div>
       <div class="install-step-card reveal" style="transition-delay:.3s">
         <span class="install-step-icon">🎉</span>
@@ -769,8 +769,8 @@ https://www.example.com (접속일: 2024.01.15)"></textarea>
     </div>
     <div class="install-os-row reveal">
       <div class="install-os-chip"><span>🪟</span> Windows 10 / 11</div>
-      <div class="install-os-chip"><span>🍎</span> macOS 12+</div>
-      <div class="install-os-chip"><span>🐧</span> Ubuntu 20.04+</div>
+      <div class="install-os-chip"><span>📦</span> Python 불필요</div>
+      <div class="install-os-chip"><span>⚡</span> 더블클릭 바로 실행</div>
     </div>
   </div>
 </section>
@@ -831,7 +831,7 @@ https://www.example.com (접속일: 2024.01.15)"></textarea>
   <h2>지금 바로<br>시작해보세요</h2>
   <p>Filelo는 무료입니다. 설치 후 5분 안에 첫 번째 파일 작업을 완료할 수 있어요.</p>
   <div class="cta-btns">
-    <a href="filelo.py" download="filelo.py" class="btn-download">⬇ 무료 다운로드</a>
+    <a href="https://github.com/joys000/Filelo/releases/latest/download/Filelo.exe" download="Filelo.exe" class="btn-download">⬇ 무료 다운로드</a>
     <a href="#ai-tools" class="btn-outline">AI 도구 체험하기</a>
   </div>
 </section>
@@ -839,7 +839,7 @@ https://www.example.com (접속일: 2024.01.15)"></textarea>
 <footer>
   <div class="footer-logo">Filelo</div>
   <p class="footer-copy">© 2025 Filelo. 모든 권리 보유.</p>
-  <ul class="footer-links"><li><a href="#" onclick="openModal('privacy');return false">개인정보처리방침</a></li><li><a href="#" onclick="openModal('terms');return false">이용약관</a></li><li><a href="#" onclick="openModal('contact');return false">문의</a></li></ul>
+  <ul class="footer-links"><li><a href="#" onclick="openModal('privacy');return false">개인정보처리방침</a></li><li><a href="#" onclick="openModal('terms');return false">이용약관</a></li><li><a href="https://discord.gg/7agPwy9KRb" target="_blank">문의 (Discord)</a></li></ul>
 </footer>
 
 <!-- ── MODALS ── -->
@@ -893,39 +893,19 @@ https://www.example.com (접속일: 2024.01.15)"></textarea>
 
 <div class="modal-overlay" id="modal-contact" onclick="if(event.target===this)closeModal('contact')">
   <div class="modal-box">
-    <div class="modal-head">
+    <div class="modal-header">
       <span class="modal-title">문의하기</span>
       <button class="modal-close" onclick="closeModal('contact')">✕</button>
     </div>
-    <div class="modal-body">
-      <div class="contact-form" id="contactForm">
-        <div>
-          <div class="contact-label">이름</div>
-          <input type="text" class="contact-input" id="contactName" placeholder="홍길동">
-        </div>
-        <div>
-          <div class="contact-label">이메일</div>
-          <input type="email" class="contact-input" id="contactEmail" placeholder="example@email.com">
-        </div>
-        <div>
-          <div class="contact-label">문의 유형</div>
-          <select class="contact-input" id="contactType" style="cursor:pointer">
-            <option>버그 신고</option>
-            <option>기능 제안</option>
-            <option>사용 문의</option>
-            <option>기타</option>
-          </select>
-        </div>
-        <div>
-          <div class="contact-label">내용</div>
-          <textarea class="contact-textarea" id="contactMsg" placeholder="문의 내용을 자세히 작성해주세요."></textarea>
-        </div>
-        <button class="contact-send-btn" onclick="sendContact()">보내기 →</button>
-      </div>
-      <div class="contact-success" id="contactSuccess">
-        <div class="contact-success-icon">✅</div>
-        <p>문의가 접수되었습니다.<br>빠른 시일 내에 답변드리겠습니다.</p>
-      </div>
+    <div class="modal-body" style="text-align:center;padding:32px 24px;">
+      <div style="font-size:48px;margin-bottom:16px;">💬</div>
+      <h3 style="font-family:'Syne',sans-serif;font-size:20px;font-weight:700;margin-bottom:12px;color:var(--text);">공식 Discord 서버로 문의해주세요</h3>
+      <p style="color:var(--text-sub);font-size:14px;line-height:1.7;margin-bottom:28px;">버그 신고, 기능 제안, 사용법 문의 등<br>모든 문의는 Discord에서 개발자가 직접 답변합니다.</p>
+      <a href="https://discord.gg/7agPwy9KRb" target="_blank" style="display:inline-flex;align-items:center;gap:10px;background:#5865F2;color:#fff;padding:14px 28px;border-radius:10px;font-size:15px;font-weight:700;text-decoration:none;transition:background .2s;" onmouseover="this.style.background='#4752C4'" onmouseout="this.style.background='#5865F2'">
+        <svg width="20" height="20" viewBox="0 0 71 55" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M60.1 4.9A58.6 58.6 0 0 0 45.7.7a.2.2 0 0 0-.2.1c-.6 1.1-1.3 2.6-1.8 3.7a54.1 54.1 0 0 0-16.3 0 38 38 0 0 0-1.8-3.7.2.2 0 0 0-.2-.1A58.4 58.4 0 0 0 11 4.9a.2.2 0 0 0-.1.1C1.6 18.7-1 32.2.3 45.5v.1a59 59 0 0 0 18 9.1.2.2 0 0 0 .2-.1 42.1 42.1 0 0 0 3.6-5.9.2.2 0 0 0-.1-.3 38.7 38.7 0 0 1-5.5-2.6.2.2 0 0 1 0-.4l1.1-.8a.2.2 0 0 1 .2 0c11.5 5.3 24 5.3 35.4 0a.2.2 0 0 1 .2 0l1.1.8a.2.2 0 0 1 0 .4 36.2 36.2 0 0 1-5.5 2.6.2.2 0 0 0-.1.3 47.3 47.3 0 0 0 3.6 5.9.2.2 0 0 0 .2.1 58.8 58.8 0 0 0 18.1-9.1v-.1c1.5-15.6-2.5-29-10.6-41a.2.2 0 0 0-.1-.1ZM23.7 37.3c-3.5 0-6.4-3.2-6.4-7.2s2.8-7.2 6.4-7.2c3.6 0 6.5 3.3 6.4 7.2 0 4-2.8 7.2-6.4 7.2Zm23.7 0c-3.5 0-6.4-3.2-6.4-7.2s2.8-7.2 6.4-7.2c3.6 0 6.5 3.3 6.4 7.2 0 4-2.8 7.2-6.4 7.2Z"/></svg>
+        Discord 서버 참여하기
+      </a>
+      <p style="margin-top:20px;font-size:12px;color:var(--text-sub);">서버 주소: https://discord.gg/7agPwy9KRb</p>
     </div>
   </div>
 </div>
@@ -1145,24 +1125,8 @@ document.addEventListener('keydown', e => {
   }
 });
 function sendContact() {
-  const name  = document.getElementById('contactName').value.trim();
-  const email = document.getElementById('contactEmail').value.trim();
-  const msg   = document.getElementById('contactMsg').value.trim();
-  if(!name || !email || !msg) {
-    alert('이름, 이메일, 내용을 모두 입력해주세요.');
-    return;
-  }
-  // 실제 전송 로직 자리 (예: mailto or fetch API)
-  document.getElementById('contactForm').style.display = 'none';
-  document.getElementById('contactSuccess').style.display = 'block';
-  setTimeout(() => {
-    document.getElementById('contactForm').style.display = 'flex';
-    document.getElementById('contactSuccess').style.display = 'none';
-    document.getElementById('contactName').value = '';
-    document.getElementById('contactEmail').value = '';
-    document.getElementById('contactMsg').value = '';
-    closeModal('contact');
-  }, 2800);
+  window.open('https://discord.gg/7agPwy9KRb', '_blank');
+  closeModal('contact');
 }
 
 </script>
