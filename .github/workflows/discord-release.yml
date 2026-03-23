@@ -1,4 +1,4 @@
-name: Release_Notification
+name: RELEASE_NOTIFICATION
 on:
   release:
     # 정식 배포(published)뿐만 아니라 편집(edited) 시에도 알림이 가도록 범위를 넓혔습니다.
