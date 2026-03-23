@@ -1,8 +1,8 @@
 name: Release_Notification
 on:
   release:
-    # 발행, 수정, 프리릴리즈, 정식 릴리즈 전환 등 모든 상태 변화를 완벽하게 감지합니다.
-    types: [published, edited, prereleased, released]
+    # 오직 '새로운 릴리즈가 발행되었을 때' 한 번만 알림을 보냅니다.
+    types: [published]
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
@@ -14,7 +14,6 @@ jobs:
       - name: Discord 알림 전송
         uses: sarisia/actions-status-discord@v1
         with:
-          # webhook_url이 아닙니다. 정확히 webhook입니다.
           webhook: ${{ secrets.RELEASE_NOTIFICATION }}
           status: success
           title: "🎉 Filelo 새로운 버전 출시!"
