@@ -1,4 +1,4 @@
-name: Discord Release Notification
+name: Release_Notification
 
 on:
   release:
@@ -8,15 +8,10 @@ on:
         notify-discord:
             runs-on: ubuntu-latest
                 steps:
-                      - name: Send Discord Webhook
-                              uses: tsickert/discord-webhook@v1
-                                      with:
-                                                webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
-                                                          content: |
-                                                                      🎉 **Filelo 새로운 버전 출시!**
-
-                                                                                              📦 **버전**: ${{ github.event.release.tag_name }}
-                                                                                                          📝 **업데이트 내용**:
-                                                                                                                      ${{ github.event.release.body }}
-                                                                                                                                  
-                                                                                                                                              🔗 **상세정보**: ${{ github.event.release.html_url }}
+                      - name: Discord Notification
+                              run: |
+                                        curl -X POST ${{ secrets.Release_Notification }} \
+                                                  -H "Content-Type: application/json" \
+                                                            -d "{
+                                                                        \"content\": \"🎉 **Filelo 새로운 버전 출시!**\n\n📦 **버전**: ${{ github.event.release.tag_name }}\n\n📝 **업데이트 내용**:\n\`\`\`\n${{ github.event.release.body }}\n\`\`\`\n\n🔗 **상세정보**: ${{ github.event.release.html_url }}\"
+                                                                                  }"
