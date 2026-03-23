@@ -1,47 +1,27 @@
-name: Deploy GitHub Pages
-
+name: Release_Notification
 on:
-  # 메인 브랜치에 푸시될 때 실행
-  push:
-    branches: ["main"]
-
-  # Actions 탭에서 수동으로 실행 가능하게 설정
-  workflow_dispatch:
-
-# GITHUB_TOKEN 권한 설정 (Pages 배포에 필수)
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-# 동시에 여러 배포가 진행될 경우 이전 배포를 취소하여 충돌 방지
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
+  release:
+    # 정식 발행, 수정, 프리릴리즈 시 모두 작동하도록 설정
+    types: [published, edited, prereleased]
 
 env:
-  # 2026년 6월 2일부터 적용되는 Node.js 24 환경을 강제로 미리 사용하여 경고 제거 및 호환성 검증
+  # Node.js 24 환경 강제 적용 (경고 방지 및 스트레스 테스트)
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  notify:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+      - name: Discord 알림 전송
+        uses: sarisia/actions-status-discord@v1
         with:
-          # 레포지토리의 루트 경로('.')를 배포 대상으로 설정
-          path: '.'
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          # 'webhook_url'을 'webhook'으로 수정 완료
+          webhook: ${{ secrets.RELEASE_NOTIFICATION }}
+          status: success
+          title: "🎉 Filelo 새로운 버전 출시!"
+          description: |
+            📦 **버전:** ${{ github.event.release.tag_name }}
+            📝 **업데이트 내용:** ${{ github.event.release.body }}
+            
+            🔗 **상세정보:** [GitHub Release 바로가기](${{ github.event.release.html_url }})
+          color: 0x00ff00
