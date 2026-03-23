@@ -1,7 +1,9 @@
 name: Release_Notification
+
 on:
   release:
       types: [published]
+
       jobs:
         notify:
             runs-on: ubuntu-latest
@@ -13,5 +15,5 @@ on:
                                                             title: "🎉 Filelo 새로운 버전 출시!"
                                                                       description: |
                                                                                   📦 버전: ${{ github.event.release.tag_name }}
-                                                                                              📝 업데이트 내용: ${{ github.event.release.body }}
-                                                                                                          🔗 상세정보: ${{ github.event.release.html_url }}
+                                                                                              📝 업데이트: ${{ github.event.release.body }}
+                                                                                                          🔗 링크: ${{ github.event.release.html_url }}
