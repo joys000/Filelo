@@ -2,12 +2,8 @@ name: Release Notification
 on:
   release:
       types: [published]
-
       jobs:
         notify:
             runs-on: ubuntu-latest
                 steps:
-                      - run: |
-                                curl -X POST "${{ secrets.Release_Notification }}" \
-                                            -H "Content-Type: application/json" \
-                                                        -d "{\"content\": \"🎉 Filelo 새로운 버전 출시!\n\n📦 버전: ${{ github.event.release.tag_name }}\n\n📝 업데이트:\n${{ github.event.release.body }}\n\n🔗 링크: ${{ github.event.release.html_url }}\"}"
+                      - run: curl -X POST ${{ secrets.Release_Notification }} -H "Content-Type: application/json" --data '{"content":"Filelo 새로운 버전 출시!\n버전: ${{ github.event.release.tag_name }}"}'
